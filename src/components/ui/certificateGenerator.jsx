@@ -63,7 +63,7 @@ export default function CertificateGenerator() {
         <p className="font-medium ">{date || "[Completion Date]"}</p>
       </div>
 
-      <Button onClick={handleDownload}>Download Certificate</Button>
+      <Button onClick={handleDownload}>Download Certificate for better in future</Button>
     </div>
   );
 }
