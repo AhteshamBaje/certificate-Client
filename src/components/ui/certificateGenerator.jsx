@@ -1,4 +1,3 @@
-import react from 'react'
 import { useState, useRef } from "react";
 import { Button } from './Button';
 import { Input } from './Input';
