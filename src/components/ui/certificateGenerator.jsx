@@ -1,5 +1,4 @@
-import react from 'react'
-import { useState, useRef } from "react";
+import React , { useState, useRef } from "react";
 import { Button } from './Button';
 import { Input } from './Input';
 import { Label } from './Label';
@@ -8,7 +7,7 @@ import jsPDF from 'jspdf';
 
 
 export default function CertificateGenerator() {
-  const [name, setName] = useState("");
+  const [name, setName] = useState(""); 
   const [course, setCourse] = useState("");
   const [date, setDate] = useState("");
   const certificateRef = useRef(null);
@@ -22,18 +21,20 @@ export default function CertificateGenerator() {
     try {
 
       const input = certificateRef.current;
-      const canvas = await html2canvas(input).then((canvas) => {
-        const imgData = canvas.toDataURL('images/image.png');
-        const pdf = new jsPDF('1', 'mm', 'a4');
-        const imgWidth = 500;
+      const canvas = await html2canvas(input , {scale : 2});
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+
+        const imgWidth = 210;
+        const pageHeight = 297; // A4 height in mm
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
         pdf.save(`${name}_certificate.pdf`)
-      })
+      }
 
-    } catch (error) {
-      console.log(error.message);
+    catch (error) {
+    console.log(error.message);
 
     }
   };
