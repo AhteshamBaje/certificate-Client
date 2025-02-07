@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.0",
+    "axios": "^1.7.9",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.2",
+    "mongoose": "^8.9.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-html2pdf": "^1.0.1"
