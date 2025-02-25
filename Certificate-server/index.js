@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config'
 import cors from 'cors'
 import router from './Routes/internshipRouter.js';
+import OfferRouter from './Routes/offerLetterRoutes.js';
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.post('/', (req, res) => {
 
 //routers...
 app.use('/api', router)
+app.use('/api2', OfferRouter);
 
 //DB connection..
 const connectDB = async () => {

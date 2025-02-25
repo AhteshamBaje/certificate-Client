@@ -1,103 +1,137 @@
-import React from 'react'
-import { Button } from '../components/ui/Button'
-import { Input } from '../components/ui/Input'
-import { Label } from '../components/ui/Label'
-import { Link }  from "react-router-dom";
+import React, { useState } from "react";
+import { Button } from "../components/ui/Button";
+import { Input } from "../components/ui/Input";
+import { Label } from "../components/ui/Label";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function OfferLetterForm() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [salary, setSalary] = useState("");
+  const [jobRole, setJobRole] = useState("");
+  const [startDate, setStartDate] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleDownload = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:8003/api2/offer", {
+        name,
+        email,
+        salary,
+        jobRole,
+        startDate,
+      });
+
+      alert("Offer-Letter details saved successfully!");
+      console.log(res);
+
+      if (res.status === 200) {
+        const resData = await res.data;
+        console.log(resData.message);
+
+        navigate(`/OfferLetter/${resData.newOfferStudents._id}`);
+
+        setName("");
+        setEmail("");
+        setSalary("");
+        setJobRole("");
+        setStartDate("");
+      }
+    } catch (error) {
+      console.error("Error saving Offer-Letter details:", error);
+      alert(error.response.data.message);
+    }
+  };
+
   return (
+    <>
+      {/* Responsive Navigation */}
+      <nav className="bg-blue-600 text-white text-center py-4 shadow-lg">
+        <h1 className="text-2xl font-bold">Offer-Letter Certificate Generator</h1>
+        <ul className="container mx-auto flex flex-wrap justify-center sm:justify-between items-center px-4 sm:px-20 space-y-2 sm:space-y-0">
+          <li>
+            <Link to="/" className="hover:underline font-bold text-lg sm:text-xl">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/OfferLetterList" className="hover:underline font-bold text-lg sm:text-xl">
+              Offer-Letter List
+            </Link>
+          </li>
+        </ul>
+      </nav>
 
-     <>
-            <nav className="bg-blue-600 text-white text-center py-6 shadow-lg">
-                <h1 className="text-2xl font-bold  ">Offer-Letter Certificate Generator</h1>
-                <ul className="container mx-auto flex justify-between items-center px-4">
-                    <li>
-                        <Link to="/" className="hover:underline font-bold text-xl">
-                            Home
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/internshiplist" className="hover:underline font-bold text-xl">
-                            Offer-Letter List
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
-            <div className=' flex items-center justify-center'>
-                <form className="w-full max-w-md space-y-4 p-4 pt-10" >
-                    <div>
-                        <Label htmlFor="Name">Name</Label>
-                        <Input
-                            id="Name"
-                            onChange={(e) => setStudentName(e.target.value)}
-                            placeholder="Enter student Name"
-                            aria-label="Name"
-                            style={{ direction: "ltr", textAlign: "left" }}
-                        />
-                    </div>
+      {/* Responsive Form */}
+      <div className="flex items-center justify-center min-h-screen px-4 sm:px-0">
+        <form className="w-full max-w-lg bg-white shadow-md rounded-lg p-6 space-y-4">
+          {/* Name */}
+          <div>
+            <Label htmlFor="Name">Name</Label>
+            <Input
+              id="Name"
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter Name"
+              className="w-full"
+            />
+          </div>
 
-                    <div>
-                        <Label htmlFor="email">email</Label>
-                        <Input
-                            id="emsail"
-                            onChange={(e) => setUsn(e.target.value)}
-                            placeholder="Enter email"
-                            aria-label=" email"
-                            style={{ direction: "ltr", textAlign: "left" }}
-                        />
-                    </div>
+          {/* Email */}
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter Email"
+              className="w-full"
+            />
+          </div>
 
-                    <div>
-                        <Label htmlFor="salary">Salary</Label>
-                        <Input
-                            id="salary"
-                            onChange={(e) => setCourse(e.target.value)}
-                            placeholder="Enter salary"
-                            aria-label="salary"
-                            style={{ direction: "ltr", textAlign: "left" }}
-                        />
-                    </div>
+          {/* Salary */}
+          <div>
+            <Label htmlFor="salary">Salary</Label>
+            <Input
+              id="salary"
+              onChange={(e) => setSalary(e.target.value)}
+              placeholder="Enter Salary"
+              className="w-full"
+            />
+          </div>
 
-                    <div>
-                        <Label htmlFor="job role">Job Role</Label>
-                        <Input
-                            id="job role"
-                            onChange={(e) => setCourse(e.target.value)}
-                            placeholder="Enter job role"
-                            aria-label="job role"
-                            style={{ direction: "ltr", textAlign: "left" }}
-                        />
-                    </div>
+          {/* Job Role */}
+          <div>
+            <Label htmlFor="jobRole">Job Role</Label>
+            <Input
+              id="jobRole"
+              onChange={(e) => setJobRole(e.target.value)}
+              placeholder="Enter Job Role"
+              className="w-full"
+            />
+          </div>
 
-                    <div>
-                        <Label htmlFor="startDate">Start Date</Label>
-                        <Input
-                            id="startDate"
-                            type="date"
-                            onChange={(e) => setStartDate(e.target.value)}
-                            aria-label="startDate"
-                            style={{ direction: "ltr", textAlign: "left" }}
-                        />
-                    </div>
+          {/* Start Date */}
+          <div>
+            <Label htmlFor="startDate">Start Date</Label>
+            <Input
+              id="startDate"
+              type="date"
+              onChange={(e) => setStartDate(e.target.value)}
+              className="w-full"
+            />
+          </div>
 
-                    <div>
-                        <Label htmlFor="endDate">Start Date</Label>
-                        <Input
-                            id="endDate"
-                            type="date"
-                            onChange={(e) => setEndDate(e.target.value)}
-                            aria-label="endDate"
-                            style={{ direction: "ltr", textAlign: "left" }}
-                        />
-                    </div>
-
-                    <Button type="button" className="px-4 py-2" >
-                        Download Certificate
-                    </Button>
-                </form>
-            </div>
-        </>
-)
+          {/* Submit Button */}
+          <Button type="button" className="w-full px-4 py-2" onClick={handleDownload}>
+            Download Certificate
+          </Button>
+        </form>
+      </div>
+    </>
+  );
 }
 
-export default OfferLetterForm
+export default OfferLetterForm;

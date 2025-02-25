@@ -6,6 +6,8 @@ import { Home } from './pages/Home.jsx';
 import { Form } from './pages/InternshipForm.jsx';
 import OfferLetterForm from './pages/OfferLetterForm.jsx';
 import InternshipList from './pages/InternshipList.jsx';
+import OfferLetterList from './pages/OfferLetterList.jsx';
+import OfferLetter from './pages/OfferLetter.jsx';
 
 
 function App() {
@@ -26,10 +28,20 @@ function App() {
       path:'/InternshipList',
       element:<InternshipList/>
     },
+
+    //Offer-Letter paths...
     {
       path:'/offerletterForm',
       element:<OfferLetterForm/>
     },
+    {
+      path:'/OfferLetter/:id',
+      element:<OfferLetter/>
+    },
+    {
+      path:'/OfferLetterList',
+      element:<OfferLetterList/>
+    }
   ]);
 
   return (

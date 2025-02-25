@@ -15,6 +15,10 @@ const InternshipSchema = new Schema(
       type: String,
       required: true,
     },
+    topic : {
+      type : String,
+      required : true
+    },
     startDate: {
       type: Date,
       required: true,

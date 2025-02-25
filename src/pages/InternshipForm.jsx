@@ -10,6 +10,7 @@ export const Form = () => {
     const [studentName, setStudentName] = useState("");
     const [usn, setUsn] = useState("");
     const [course, setCourse] = useState("");
+    const [topic , setTopic] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
@@ -18,9 +19,8 @@ export const Form = () => {
 
     const handleDownload = async (e) => {
         e.preventDefault();
-        const certificateText = `Certificate of Completion\n\nThis is to certify that ${studentName}\nhas successfully ${usn} completed the course:\n${course}\non ${startDate} ${endDate}.`;
         try {
-            const res = await axios.post('http://localhost:8003/api/internship', { studentName, usn, course, startDate, endDate });
+            const res = await axios.post('http://localhost:8003/api/internship', { studentName, usn, course, topic , startDate, endDate });
             alert('Certificate details saved successfully!');
 
             if (res.status === 200) {
@@ -32,6 +32,7 @@ export const Form = () => {
                 setStudentName("");
                 setUsn("");
                 setCourse("");
+                setTopic("");
                 setStartDate("");
                 setEndDate("");
             }
@@ -47,9 +48,9 @@ export const Form = () => {
 
     return (
         <>
-            <nav className="bg-blue-600 text-white text-center py-6 shadow-lg">
+            <nav className="bg-blue-600 text-white text-center py-4 shadow-lg">
                 <h1 className="text-2xl font-bold  "> Internship Certificate Generator</h1>
-                <ul className="container mx-auto flex justify-between items-center px-4">
+                <ul className="container mx-auto flex justify-between items-center px-20">
                     <li>
                         <Link to="/" className="hover:underline font-bold text-xl">
                             Home
@@ -101,6 +102,18 @@ export const Form = () => {
                     </div>
 
                     <div>
+                        <Label htmlFor="topic">Topics Covered</Label>
+                        <Input
+                            id="topic"
+                            value={topic}
+                            onChange={(e) => setTopic(e.target.value)}
+                            placeholder="Enter topics "
+                            aria-label="topic"
+                            style={{ direction: "ltr", textAlign: "left" }}
+                        />
+                    </div>
+
+                    <div>
                         <Label htmlFor="startDate">Start Date</Label>
                         <Input
                             id="startDate"
@@ -113,7 +126,7 @@ export const Form = () => {
                     </div>
 
                     <div>
-                        <Label htmlFor="endDate">Start Date</Label>
+                        <Label htmlFor="endDate">End Date</Label>
                         <Input
                             id="endDate"
                             type="date"
