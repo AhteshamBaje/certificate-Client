@@ -4,13 +4,14 @@ import { Input } from '../components/ui/Input.jsx';
 import { Button } from '../components/ui/Button.jsx';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Link }  from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Navbar } from '../components/ui/Navbar.jsx';
 
 export const Form = () => {
     const [studentName, setStudentName] = useState("");
     const [usn, setUsn] = useState("");
     const [course, setCourse] = useState("");
-    const [topic , setTopic] = useState("");
+    const [topic, setTopic] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
@@ -20,7 +21,7 @@ export const Form = () => {
     const handleDownload = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:8003/api/internship', { studentName, usn, course, topic , startDate, endDate });
+            const res = await axios.post('http://localhost:8003/api/internship', { studentName, usn, course, topic, startDate, endDate });
             alert('Certificate details saved successfully!');
 
             if (res.status === 200) {
@@ -48,24 +49,15 @@ export const Form = () => {
 
     return (
         <>
-            <nav className="bg-blue-600 text-white text-center py-4 shadow-lg">
-                <h1 className="text-2xl font-bold  "> Internship Certificate Generator</h1>
-                <ul className="container mx-auto flex justify-between items-center px-20">
-                    <li>
-                        <Link to="/" className="hover:underline font-bold text-xl">
-                            Home
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/InternshipList" className="hover:underline font-bold text-xl">
-                            Internship List
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
-            <div className=' flex items-center justify-center'>
-                <form className="w-full max-w-md space-y-4 p-4 pt-10" >
+            <Navbar />
+            <div>
+                <Link to="/internshipList" className='hover:underline font-bold text-xl p-2 m-20 '>Internship certificates Lists
+                </Link>
+            </div>
+            <div className=' flex items-center justify-center min-h-screen px-4 sm:px-2'>
+                <form className="w-full max-w-lg bg-white shadow-xl rounded-lg p-6 space-y-4 m-4" >
                     <div>
+                        <p className="flex items-center justify-center text-2xl font-bold " >Internship Certificate </p>
                         <Label htmlFor="studentName">Name</Label>
                         <Input
                             id="studentName"
@@ -137,7 +129,7 @@ export const Form = () => {
                         />
                     </div>
 
-                    <Button type="button" className="px-4 py-2" onClick={handleDownload}>
+                    <Button type="button" className="w-full px-4 py-2" onClick={handleDownload}>
                         Download Certificate
                     </Button>
                 </form>

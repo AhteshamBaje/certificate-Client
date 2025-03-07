@@ -9,20 +9,22 @@ export const Navbar = () => {
         <h1 className="text-2xl font-bold">Certificate Generator</h1>
         <ul className="flex space-x-6">
           <li>
-            <Link to="/" className="hover:underline font-bold text-xl">
-              Home
+          </li>
+          <li>
+            <Link to="/internshipForm" className="hover:underline font-bold text-xl">
+                Internship Certificates
             </Link>
           </li>
           <li>
-            <Link to="/form" className="hover:underline font-bold text-xl">
-              OfferLetter List
+            <Link to="/offerletterForm" className="hover:underline font-bold text-xl">
+              OfferLetter Certificates
+            </Link>
+          </li> 
+          <li>
+            <Link to="/CourseForm" className="hover:underline font-bold text-xl">
+              Course Certificates
             </Link>
           </li>                                                                     
-          <li>
-            <Link to="/internshiplist" className="hover:underline font-bold text-xl">
-                Internship List
-            </Link>
-          </li>
         </ul>
       </div>
     </nav>

@@ -5,6 +5,7 @@ import { Label } from "../components/ui/Label";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Navbar } from "../components/ui/Navbar";
 
 function OfferLetterForm() {
   const [name, setName] = useState("");
@@ -50,27 +51,18 @@ function OfferLetterForm() {
   return (
     <>
       {/* Responsive Navigation */}
-      <nav className="bg-blue-600 text-white text-center py-4 shadow-lg">
-        <h1 className="text-2xl font-bold">Offer-Letter Certificate Generator</h1>
-        <ul className="container mx-auto flex flex-wrap justify-center sm:justify-between items-center px-4 sm:px-20 space-y-2 sm:space-y-0">
-          <li>
-            <Link to="/" className="hover:underline font-bold text-lg sm:text-xl">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/OfferLetterList" className="hover:underline font-bold text-lg sm:text-xl">
-              Offer-Letter List
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      <Navbar />
+      <div>
+        <Link to="/OfferLetterList" className='hover:underline font-bold text-xl p-2 m-20 '>Offer Letter Lists
+        </Link>
+      </div>
 
       {/* Responsive Form */}
       <div className="flex items-center justify-center min-h-screen px-4 sm:px-0">
-        <form className="w-full max-w-lg bg-white shadow-md rounded-lg p-6 space-y-4">
+        <form className="w-full max-w-lg bg-white shadow-xl rounded-lg p-6 space-y-4">
           {/* Name */}
           <div>
+            <p className="flex items-center justify-center text-2xl font-bold" >Offer Letter </p>
             <Label htmlFor="Name">Name</Label>
             <Input
               id="Name"

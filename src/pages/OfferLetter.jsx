@@ -4,6 +4,7 @@ import jsPDF from "jspdf";
 import { Button } from "../components/ui/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import QRCode from "react-qr-code";
 
 const OfferLetter = () => {
   const { id } = useParams();
@@ -46,6 +47,9 @@ const OfferLetter = () => {
 
   const { name, salary, jobRole, startDate, RefereneNo } = data;
 
+  const qr = `${import.meta.env.VITE_CLIENTURL}/OfferLetter/${id}`;
+
+
   return (
     <div>
       <div ref={certificateRef} className="bg-[url(/images/offerLetter.jpg)] bg-contain bg-center h-[100vh] flex flex-col bg-no-repeat">
@@ -71,7 +75,13 @@ const OfferLetter = () => {
           <br />
           <strong>Joining Date:</strong> {new Date(startDate).toLocaleDateString("en-IN")}
           <br /><br />
-          Please sign and return a copy of this letter as a confirmation of your acceptance.
+          Your role as a {jobRole} will require you to take on various
+          responsibilities and work closely with the team to achieve the
+          company's goals. We believe this position will offer you many
+          opportunities for growth and development. Please sign and return a
+          copy of this letter as a confirmation of your acceptance. If you have
+          any questions or concerns, feel free to contact us. We look forward to
+          welcoming you to the team at Five Seven I.T Solutions. Best Regards,
         </p>
         <div className="w-28 ml-10 mt-5">
           <img src="/images/sign.jpeg" alt="sign" />
@@ -83,7 +93,10 @@ const OfferLetter = () => {
         <p className="ml-10 font-bold text-sm">Chief Executive Officer</p>
         <p className="ml-10 font-bold text-sm">Five Seven I.T Solutions</p>
 
-        <div className="ml-96 mb-14"> <strong>ID : {id}</strong> </div>
+      </div>
+
+      <div className="mx-80 -mt-[290px] ">
+        <QRCode value={qr} className="h-20 w-20" />
       </div>
 
 
@@ -95,6 +108,7 @@ const OfferLetter = () => {
       <div className="flex justify-center mt-4 print:hidden">
         <Button onClick={() => navigate(-1)}>Back</Button>
       </div>
+      <div className="ml-[450px] my-10"> <strong>ID : {id}</strong> </div>
     </div>
   );
 };

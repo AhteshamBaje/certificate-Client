@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import * as XLSX from "xlsx";
+import { Navbar } from '../components/ui/Navbar';
 
 const OfferLetterList = () => {
     const navigate = useNavigate();
@@ -9,111 +11,130 @@ const OfferLetterList = () => {
     const [filteredData, setFilteredData] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState();
-
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [totalRecords , setTotalRecords] = useState(0);
 
     const searchEmploye = async () => {
         try {
             const searchEname = await axios.get(`http://localhost:8003/api2/searchdata2/${searchQuery}`);
-            if(searchEname.data.success){
-                setFilteredData(searchEname.data.data)
+            if (searchEname.data.success) {
+                setFilteredData(searchEname.data.data);
+            } else {
+                alert("No Employe found")
             }
         } catch (error) {
-            alert(error.response.data.message);
+            console.error("Search Error:", error);
+            alert(error.response?.data?.message || "Error searching Employe.");
         }
-    }
+    };
 
-    const handlePrev = () => {
-        setPage(page - 1);
-    }
+    const handleFileChange = (event) => {
+        if (event.target.files && event.target.files.length > 0) {
+            setSelectedFile(event.target.files[0]); // Ensure a file is selected
+            console.log(event.target.files[0].name);
 
-    const handleNext = () => {
-        setPage(page + 1);
-    }
+        } else {
+            setSelectedFile(null);
+        }
+    };
+
+
+    const handleUpload = async () => {
+        console.log(selectedFile);
+        try {
+            const data = await selectedFile.arrayBuffer();
+            const workbook = XLSX.read(data, { type: "array" }); // Fix read method
+            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+
+            console.log("Parsed JSON Data:", jsonData); // Debugging
+
+            // ✅ Ensure JSON is sent correctly
+            const response = await axios.post(
+                "http://localhost:8003/api2/offer/upload",
+                { jsonData }, // Directly send the JSON
+                {
+                    headers: {
+                        "Content-Type": "application/json", // Fix header
+                    },
+                }
+            );
+
+            alert(response.data.message);
+            console.log("Uploaded file Path:", response.data);
+        } catch (error) {
+            console.error("Upload error:", error);
+            alert(error.response?.data?.message || "Upload failed");
+        }
+    };
+
+    const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));
+    const handleNext = () => setPage((prev) => (prev < totalPages ? prev + 1 : prev));
+
     const fetchData = async () => {
         try {
             const response = await axios.get(`http://localhost:8003/api2/OfferLetterList/${page}`);
             if (!response.data || response.data.data.length === 0) {
-                console.log("No data found.");
                 alert("No data found.");
                 return;
             }
-            console.log("Fetched data:", response.data.data);
             setData(response.data.data);
             setFilteredData(response.data.data);
             setTotalPages(response.data.totalPages);
         } catch (error) {
-            console.error("Error fetching data:", error);
             alert("An error occurred while fetching the data.");
         }
     };
 
-    // Fetch data from API
     useEffect(() => {
         fetchData();
     }, [page]);
 
-
-    // Delete Offer Letter
     const delEmploye = async (id) => {
-        const confirm = window.confirm("Do you want to delete this offer letter?");
-        if (!confirm) return;
-
+        if (!window.confirm("Do you want to delete?")) return;
         try {
-            console.log({ id });
             const res = await axios.delete(`http://localhost:8003/api2/deleteOfferLeter/${id}`);
-
             if (res.status === 200) {
-                alert("Offer letter deleted successfully");
-
-                // Update state after deletion
-                setData((prevData) => prevData.filter(offer => offer._id !== id));
-                setFilteredData((prevData) => prevData.filter(offer => offer._id !== id));
+                alert("employe deleted successfully");
+                setFilteredData((prevData) => prevData.filter((employe) => employe._id !== id));
             }
         } catch (error) {
-            console.error("Error deleting offer letter:", error);
+            alert("Error deleting employe.");
         }
     };
 
+      useEffect(() => {
+            const fetchTotalRecords2 = async () => {
+                try {
+                    const response = await axios.get("http://localhost:8003/api2/totalRecords2");
+                    if (response.status === 200) {
+                        setTotalRecords(response.data.totalRecords);
+                    }
+                } catch (error) {
+                    console.error("Error fetching total records:", error)
+                };
+            }
+            fetchTotalRecords2();
+        }, []);
+
     return (
         <>
-            {/* Navigation Bar */}
-            <nav className="bg-blue-600 text-white text-center py-4 shadow-lg">
-                <h1 className="text-2xl font-bold">OFFER LETTER LIST</h1>
-                <ul className="container mx-auto flex flex-wrap justify-center sm:justify-between items-center px-4 sm:px-20 space-y-2 sm:space-y-0">
-                    <li>
-                        <Link to="/OfferLetterForm" className="hover:underline font-bold text-lg sm:text-xl">
-                            Back
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/" className="hover:underline font-bold text-lg sm:text-xl">
-                            Home
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
-
-            {/* Search Bar */}
+            <Navbar />
             <div className="flex justify-center mt-4">
-                <input
-                    type="text"
-                    placeholder="Search by name..."
-                    value={searchQuery}
-                    onChange={(e) => {
-                        setSearchQuery(e.target.value)
-                        if(e.target.value===""){
-                            fetchData()
-                        }
-                    }}
-                    className="w-full max-w-md p-2 border border-gray-300 rounded-lg"
-                />
-                <button className='bg-slate-500 text-white rounded-xl px-3' onClick={searchEmploye}>search</button>
+                <input type="text" placeholder="Search by Employe name..." value={searchQuery}
+                    onChange={(e) => { setSearchQuery(e.target.value); if (e.target.value === "") fetchData(); }}
+                    className="w-full max-w-md p-2 border border-gray-300 rounded-lg" />
+                <button className='bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3' onClick={searchEmploye}>Search</button>
             </div>
+            <div className='flex ml-4 mt-6 justify-between'>
+                <input type="file" className='p-2 rounded-xl border' onChange={handleFileChange} />
+                <button className='p-2 rounded-2xl bg-slate-400 text-white hover:bg-slate-600' onClick={handleUpload}>Upload File</button>
 
-            {/* Offer Letter Table */}
+                <p className='flex justify-end p-2 px-20 font-bold text-green-700 text-lg'>Total Records : {totalRecords}</p>
+            </div>
             <div className="table-container flex justify-center items-center mx-10 py-5 overflow-x-auto">
                 <table className="w-full max-w-5xl border-collapse">
-                    <caption className="text-center font-bold text-2xl py-5">OFFER LETTERS</caption>
+                    <caption className="text-center font-bold text-2xl py-5">Offer Letter CERTIFICATES</caption>
                     <thead>
                         <tr className="bg-black text-white">
                             <th className="border p-2">ID</th>
@@ -127,50 +148,30 @@ const OfferLetterList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredData.length > 0 ? (
-                            filteredData.map((offer) => (
-                                <tr key={offer._id} className="border hover:bg-gray-100">
-                                    <td className="border p-2">{offer._id}</td>
-                                    <td className="border p-2">{offer.name}</td>
-                                    <td className="border p-2">{offer.email}</td>
-                                    <td className="border p-2">{offer.salary}</td>
-                                    <td className="border p-2">{offer.jobRole}</td>
-                                    <td className="border p-2">{new Date(offer.startDate).toLocaleDateString("en-IN")}</td>
-                                    <td className="border p-2">{offer.RefereneNo}</td>
-                                    <td className="border p-2 flex space-x-2">
-                                        <button
-                                            className="bg-red-700 text-white hover:bg-red-400 px-2 py-1 rounded-md"
-                                            onClick={() => delEmploye(offer._id)}
-                                        >
-                                            Delete
-                                        </button>
-                                        <button
-                                            className="bg-blue-700 text-white hover:bg-blue-400 px-2 py-1 rounded-md"
-                                            onClick={() => navigate(`/OfferLetter/${offer._id}`)}
-                                        >
-                                            Download
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="8" className="text-center py-4 text-gray-500">
-                                    No results found
+                        {filteredData.length > 0 ? filteredData.map((employe) => (
+                            <tr key={employe._id} className="border hover:bg-gray-100">
+                                <td className="border p-2">{employe._id}</td>
+                                <td className="border p-2">{employe.name}</td>
+                                <td className="border p-2">{employe.email}</td>
+                                <td className="border p-2">{employe.salary}</td>
+                                <td className="border p-2">{employe.jobRole}</td>
+                                <td className="border p-2">{new Date(employe.startDate).toLocaleDateString("en-IN")}</td>
+                                <td className="border p-2">{employe.RefereneNo}</td>
+                                <td className="border p-2 flex space-x-2">
+                                    <button className="bg-red-700 text-white hover:bg-red-400 px-2 py-1 rounded-md" onClick={() => delEmploye(employe._id)}>Delete</button>
+                                    <button className="bg-blue-700 text-white hover:bg-blue-400 px-2 py-1 rounded-md" onClick={() => navigate(`/OfferLetter/${employe._id}`)}>Download</button>
                                 </td>
                             </tr>
-                        )}
+                        )) : <tr><td colSpan="8" className="text-center py-4 text-gray-500">No results found</td></tr>}
                     </tbody>
                 </table>
             </div>
-
             <div className='flex justify-between p-4'>
-                <button type='button' className='bg-slate-600 px-2 text-white rounded-lg' onClick={handlePrev} disabled={page === 1 ? true : false} >previous</button>
-                <p className='p-3 border-2 rounded-lg'>page {page} of {totalPages}</p>
-                <button type='button' className='bg-slate-600 px-2 text-white rounded-lg' onClick={handleNext} disabled={page === totalPages ? true : false}>Next</button>
+                <button className='bg-slate-600 px-2 text-white rounded-lg hover:bg-slate-400' onClick={handlePrev} disabled={page === 1}>Previous</button>
+                <p className='p-3 border-b-2 rounded-lg'>Page {page} of {totalPages}</p>
+                <button className='bg-slate-600 px-2 text-white hover:bg-slate-400 rounded-lg' onClick={handleNext} disabled={page === totalPages}>Next</button>
             </div>
         </>
     );
 };
-
 export default OfferLetterList;

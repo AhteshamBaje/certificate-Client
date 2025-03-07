@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
+import QRCode from "react-qr-code";
 
 const InternshipCertificate = () => {
     const { id } = useParams();
@@ -30,6 +31,8 @@ const InternshipCertificate = () => {
     // ✅ Safely handle formData in case it's null
     const { studentName = "", usn = "", course = "", topic = "", startDate = "", endDate = "", certificateNumber = "" } = formData || {};
 
+    const qr = `${import.meta.env.VITE_CLIENTURL}/Internshipcertificate/${id}`;
+
     return (
         <>
             <div
@@ -39,7 +42,7 @@ const InternshipCertificate = () => {
 
                 <div className='flex justify-between'>
                     <p className="text-justify"><strong>{certificateNumber}</strong></p>
-                    <p className="text-justify">Date: {new Date().toLocaleDateString("en-IN")}</p>
+                    <p className="text-justify"><strong>Date: {new Date().toLocaleDateString("en-IN")}</strong></p>
 
                 </div>
 
@@ -53,12 +56,16 @@ const InternshipCertificate = () => {
                     We appreciate their efforts and contributions during the internship and wish them success in their future endeavors.
                 </p>
 
-                <img src="/images/sign.jpeg" alt="Signature" className="h-16 w-28 ml-10 mt-[40px]" />
-                <img src="/images/seal.jpeg" alt="Company Seal" className="w-28 ml-[500px] -mt-[60px]" />
+                <img src="/images/sign.jpeg" alt="Signature" className="h-16 w-28 ml-2 mt-[60px]" />
+                <img src="/images/seal.jpeg" alt="Company Seal" className="w-28 ml-[500px] -mt-[70px]" />
 
-                <p className="ml-10 -mt-1 font-bold text-sm">Huma Fatima</p>
-                <p className="ml-10 font-bold text-sm">Chief Executive Officer</p>
-                <p className="ml-10 font-bold text-sm">Five Seven I.T Solutions</p>
+                <p className="ml-4 font-bold text-sm">Huma Fatima</p>
+                <p className="ml-4 font-bold text-sm">Chief Executive Officer</p>
+                <p className="ml-4 font-bold text-sm">Five Seven I.T Solutions</p>
+            </div>
+
+            <div className="mx-80 -mt-[370px] ">
+                <QRCode value={qr} className="h-24 w-24" />
             </div>
 
             <div className='flex justify-center print:hidden mb-4'>
@@ -68,6 +75,8 @@ const InternshipCertificate = () => {
             <div className="flex justify-center mt-4 print:hidden">
                 <Button onClick={() => navigate(-1)}>Back</Button>
             </div>
+
+            <div className="ml-[450px] my-20"> <strong>ID : {id}</strong> </div>
         </>
     );
 };
