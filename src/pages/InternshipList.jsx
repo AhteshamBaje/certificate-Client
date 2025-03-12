@@ -137,18 +137,20 @@ const InternshipList = () => {
                     className="w-full max-w-md p-2 border border-gray-300 rounded-lg" />
                 <button className='bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3' onClick={searchStudent}>Search</button>
             </div>
-            <div className='flex ml-4 mt-6 justify-between'>
-                <input type="file" className='p-2 px-4 flex  rounded-xl  border' onChange={handleFileChange} />
-
-                <button className='p-2 px-2 rounded-2xl bg-slate-400 text-white hover:bg-slate-600' onClick={handleUpload}>Upload File</button>
-
-                <p className='flex justify-end p-2 px-24 font-bold text-green-700 text-lg'>Total Records : {totalRecords}</p>
+            <div className='flex justify-between'>
+                <div className='flex ml-4 mt-6'>
+                    <input type="file" className='p-2 px-4 flex  rounded-xl  border' onChange={handleFileChange} />
+                    <button className='p-2 px-2 rounded-2xl bg-slate-400 text-white hover:bg-slate-600' onClick={handleUpload}>Upload File</button>
+                </div>
+                <div className='mt-6'>
+                    <p className='justify-end py-2 px-24 font-bold text-green-700 text-lg'>Total Records : {totalRecords}</p>
+                </div>
             </div>
             <div className="table-container flex justify-center items-center mx-10 py-5 overflow-x-auto">
                 <table className="w-full max-w-5xl border-collapse">
                     <caption className="text-center font-bold text-2xl py-5">INTERNSHIP CERTIFICATES</caption>
                     <thead>
-                        <tr className="bg-black text-white">
+                        <tr className="bg-black text-white text-base">
                             <th className="border p-2">ID</th>
                             <th className="border p-2">Student Name</th>
                             <th className="border p-2">USN</th>
@@ -161,7 +163,7 @@ const InternshipList = () => {
                     </thead>
                     <tbody>
                         {filteredData.length > 0 ? filteredData.map((intern) => (
-                            <tr key={intern._id} className="border hover:bg-gray-100">
+                            <tr key={intern._id} className="border hover:bg-gray-100 text-sm">
                                 <td className="border p-2">{intern._id}</td>
                                 <td className="border p-2">{intern.studentName}</td>
                                 <td className="border p-2">{intern.usn}</td>

@@ -44,7 +44,7 @@ const offerLetterData = async (req, res) => {
 
 const offerLetterList = async (req, res) => {
     const { page } = req.params;
-    const pageLimit = 4;
+    const pageLimit = 10;
     typeof (page);
 
     const skipPage = (page - 1) * pageLimit;

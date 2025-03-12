@@ -1,4 +1,3 @@
-import { data } from "react-router";
 import InternshipLetter from "../models/internshipLetter.model.js";
 import Internship from "../models/internshipLetter.model.js";
 
@@ -53,7 +52,7 @@ const internshipData = async (req, res) => {
 
 const studentsList = async (req, res) => {
     const { page } = req.params;
-    const pageLimit = 4;
+    const pageLimit = 10;
 
     const skipPage = (page - 1) * pageLimit;
     console.log(skipPage);
@@ -165,8 +164,8 @@ const uploadFile = async (req, res) => {
                 continue;
             }
 
-            const usnExist = await Internship.findOne({usn});
-            if(usnExist){
+            const usnExist = await Internship.findOne({ usn });
+            if (usnExist) {
                 continue;
             }
 
@@ -204,17 +203,17 @@ const uploadFile = async (req, res) => {
 };
 
 
-const totalRecords = async(req , res) => {
+const totalRecords = async (req, res) => {
     try {
         const records = await Internship.countDocuments();
-        
-        if(records === 0){
-            return res.status(404).json({success:false , message:"No records"})
-        }else{
-            return res.status(200).json({success:true , message:"Records found" , totalRecords : records})
+
+        if (records === 0) {
+            return res.status(404).json({ success: false, message: "No records" })
+        } else {
+            return res.status(200).json({ success: true, message: "Records found", totalRecords: records })
         }
     } catch (error) {
-        console.error("server error while getting records" , error);
+        console.error("server error while getting records", error);
         return res.status(500).json({ success: false, message: "Server error" });
     }
 };
@@ -222,4 +221,4 @@ const totalRecords = async(req , res) => {
 
 
 
-export { internship, internshipData, studentsList, deleteInternship, updateInternship, searchData, uploadFile , totalRecords};
+export { internship, internshipData, studentsList, deleteInternship, updateInternship, searchData, uploadFile, totalRecords };

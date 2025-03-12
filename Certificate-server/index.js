@@ -4,6 +4,9 @@ import 'dotenv/config'
 import cors from 'cors'
 import router from './Routes/internshipRouter.js';
 import OfferRouter from './Routes/offerLetterRoutes.js';
+import courseRouter from './Routes/courseRouter.js';
+import registerRouter from './Routes/registerRoute.js';
+import LoginRouter from './models/Loginrouter.js';
 
 const app = express();
 
@@ -24,8 +27,11 @@ app.post('/', (req, res) => {
 });
 
 //routers...
-app.use('/api', router)
+app.use('/api', router);
 app.use('/api2', OfferRouter);
+app.use('/api3' , courseRouter);
+app.use('/api4' , registerRouter);
+app.use('/api5' , LoginRouter);
 
 //DB connection..
 const connectDB = async () => {

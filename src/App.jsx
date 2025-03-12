@@ -8,12 +8,17 @@ import OfferLetterForm from './pages/OfferLetterForm.jsx';
 import InternshipList from './pages/InternshipList.jsx';
 import OfferLetterList from './pages/OfferLetterList.jsx';
 import OfferLetter from './pages/OfferLetter.jsx';
+import CourseForm from './pages/CourseForm.jsx';
+import CourseList from './pages/CourseList.jsx';
+import CourseCertificate from './pages/CourseCertificate.jsx';
+import Register from './pages/Register.jsx';
+import Login from './pages/Login.jsx';
 
 
 function App() {
   const router = createBrowserRouter([
     {
-      path:'/',
+      path:'/home',
       element:<Home/>
     },
     {
@@ -41,7 +46,27 @@ function App() {
     {
       path:'/OfferLetterList',
       element:<OfferLetterList/>
-    }
+    },
+    {
+      path:'/courseForm',
+      element:<CourseForm/>
+    },
+    {
+      path:'/CourseCertificate/:id',
+      element:<CourseCertificate/>
+    },
+    {
+      path:'/courseList',
+      element:<CourseList/>
+    },
+    {
+      path:'/',
+      element:<Register/>
+    },
+    {
+      path:'/login',
+      element:<Login/>
+    },
   ]);
 
   return (

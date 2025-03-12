@@ -1,11 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Navbar } from '../components/ui/Navbar';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { Label } from '../components/ui/Label';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
+import axios from 'axios';
 
 function CourseForm() {
+    const [studentName, setStudentName] = useState("");
+    const [email, setEmail] = useState("");
+    const [title, setTitle] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+
+
+    const navigate = useNavigate();
+
+    const handleDownload = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post('http://localhost:8003/api3/courseForm', { studentName, email , title, startDate, endDate });
+            
+            if (res.status === 200) {
+                const resData = res.data;
+                console.log(resData.message);
+                alert('Certificate details saved successfully!');
+                
+                navigate(`/CourseCertificate/${resData.Certificate._id}`)
+
+                setStudentName("");
+                setEmail("");
+                setTitle("");
+                setStartDate("");
+                setEndDate("");
+            }
+
+
+
+        } catch (error) {
+            console.error('Error saving certificate details:', error);
+            alert(error.response.data.message)
+
+        }
+    };
 
 
 
@@ -23,8 +60,8 @@ function CourseForm() {
                 <Label htmlFor="studentName">Name</Label>
                 <Input
                     id="studentName"
-                    // value={studentName}
-                    // onChange={(e) => setStudentName(e.target.value)}
+                    value={studentName}
+                    onChange={(e) => setStudentName(e.target.value)}
                     placeholder="Enter student Name"
                     aria-label=" student Name"
                     style={{ direction: "ltr", textAlign: "left" }}
@@ -32,37 +69,25 @@ function CourseForm() {
             </div>
 
             <div>
-                <Label htmlFor="usn">USN</Label>
+                <Label htmlFor="email">email</Label>
                 <Input
-                    id="usn"
-                    // value={usn}
-                    // onChange={(e) => setUsn(e.target.value)}
-                    placeholder="Enter usn"
-                    aria-label=" student usn"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter email"
+                    aria-label=" student email"
                     style={{ direction: "ltr", textAlign: "left" }}
                 />
             </div>
 
             <div>
-                <Label htmlFor="course">Course Title</Label>
+                <Label htmlFor="title">Course</Label>
                 <Input
-                    id="course"
-                    // value={course}
-                    // onChange={(e) => setCourse(e.target.value)}
-                    placeholder="Enter course title"
-                    aria-label="Course Title"
-                    style={{ direction: "ltr", textAlign: "left" }}
-                />
-            </div>
-
-            <div>
-                <Label htmlFor="topic">Topics Covered</Label>
-                <Input
-                    id="topic"
-                    // value={topic}
-                    // onChange={(e) => setTopic(e.target.value)}
-                    placeholder="Enter topics "
-                    aria-label="topic"
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Enter Course name "
+                    aria-label="title"
                     style={{ direction: "ltr", textAlign: "left" }}
                 />
             </div>
@@ -72,8 +97,8 @@ function CourseForm() {
                 <Input
                     id="startDate"
                     type="date"
-                    // value={startDate}
-                    // onChange={(e) => setStartDate(e.target.value)}
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
                     aria-label="startDate"
                     style={{ direction: "ltr", textAlign: "left" }}
                 />
@@ -84,14 +109,14 @@ function CourseForm() {
                 <Input
                     id="endDate"
                     type="date"
-                    // value={endDate}
-                    // onChange={(e) => setEndDate(e.target.value)}
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
                     aria-label="endDate"
                     style={{ direction: "ltr", textAlign: "left" }}
                 />
             </div>
 
-            <Button type="button" className="w-full px-4 py-2" >
+            <Button type="button" className="w-full px-4 py-2" onClick={handleDownload} >
                 Download Certificate
             </Button>
         </form>

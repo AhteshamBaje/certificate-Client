@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Navbar } from '../components/ui/Navbar';
 
-const OfferLetterList = () => {
+const CourseList = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
@@ -12,19 +12,19 @@ const OfferLetterList = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState();
     const [selectedFile, setSelectedFile] = useState(null);
-    const [totalRecords, setTotalRecords] = useState(0);
+    const [totalRecords, setTotalRecords] = useState(0)
 
-    const searchEmploye = async () => {
+    const searchCourseStudent = async () => {
         try {
-            const searchEname = await axios.get(`http://localhost:8003/api2/searchdata2/${searchQuery}`);
-            if (searchEname.data.success) {
-                setFilteredData(searchEname.data.data);
+            const searchSname = await axios.get(`http://localhost:8003/api3/searchdata/${searchQuery}`);
+            if (searchSname.data.success) {
+                setFilteredData(searchSname.data.data);
             } else {
-                alert("No Employe found")
+                alert("No students found")
             }
         } catch (error) {
             console.error("Search Error:", error);
-            alert(error.response?.data?.message || "Error searching Employe.");
+            alert(error.response?.data?.message || "Error searching student.");
         }
     };
 
@@ -49,10 +49,18 @@ const OfferLetterList = () => {
 
             console.log("Parsed JSON Data:", jsonData); // Debugging
 
+            const existingUSNs = new Set(filteredData.map(intern => intern.usn));
+            const newRecords = jsonData.filter(record => !existingUSNs.has(record.usn));
+
+            if (newRecords.length === 0) {
+                alert("No new records found. All records already exist.");
+                return;
+            }
+
             // ✅ Ensure JSON is sent correctly
             const response = await axios.post(
-                "http://localhost:8003/api2/offer/upload",
-                { jsonData }, // Directly send the JSON
+                "http://localhost:8003/api3/course/upload",
+                { jsonData: newRecords }, // Directly send the JSON
                 {
                     headers: {
                         "Content-Type": "application/json", // Fix header
@@ -73,7 +81,7 @@ const OfferLetterList = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8003/api2/OfferLetterList/${page}`);
+            const response = await axios.get(`http://localhost:8003/api3/courseList/${page}`);
             if (!response.data || response.data.data.length === 0) {
                 alert("No data found.");
                 return;
@@ -90,23 +98,25 @@ const OfferLetterList = () => {
         fetchData();
     }, [page]);
 
-    const delEmploye = async (id) => {
+    const delCourse = async (id) => {
         if (!window.confirm("Do you want to delete?")) return;
         try {
-            const res = await axios.delete(`http://localhost:8003/api2/deleteOfferLeter/${id}`);
+            const res = await axios.delete(`http://localhost:8003/api3/delCourse/${id}`);
             if (res.status === 200) {
-                alert("employe deleted successfully");
-                setFilteredData((prevData) => prevData.filter((employe) => employe._id !== id));
+                alert("Course Student deleted successfully");
+                setFilteredData((prevData) => prevData.filter((intern) => intern._id !== id));
+            } else {
+                alert("Failed to delete. Record may not exist.");
             }
         } catch (error) {
-            alert("Error deleting employe.");
+            alert("Error deleting Course Student.");
         }
     };
 
     useEffect(() => {
-        const fetchTotalRecords2 = async () => {
+        const fetchTotalRecords = async () => {
             try {
-                const response = await axios.get("http://localhost:8003/api2/totalRecords2");
+                const response = await axios.get("http://localhost:8003/api3/totalRecords");
                 if (response.status === 200) {
                     setTotalRecords(response.data.totalRecords);
                 }
@@ -114,55 +124,54 @@ const OfferLetterList = () => {
                 console.error("Error fetching total records:", error)
             };
         }
-        fetchTotalRecords2();
+        fetchTotalRecords();
     }, []);
+
 
     return (
         <>
             <Navbar />
             <div className="flex justify-center mt-4">
-                <input type="text" placeholder="Search by Employe name..." value={searchQuery}
+                <input type="text" placeholder="Search by student name..." value={searchQuery}
                     onChange={(e) => { setSearchQuery(e.target.value); if (e.target.value === "") fetchData(); }}
                     className="w-full max-w-md p-2 border border-gray-300 rounded-lg" />
-                <button className='bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3' onClick={searchEmploye}>Search</button>
+                <button className='bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3' onClick={searchCourseStudent}>Search</button>
             </div>
             <div className='flex justify-between'>
                 <div className='flex ml-4 mt-6'>
-                    <input type="file" className='p-2 rounded-xl border' onChange={handleFileChange} />
-                    <button className='p-2 rounded-2xl bg-slate-400 text-white hover:bg-slate-600' onClick={handleUpload}>Upload File</button>
+                    <input type="file" className='p-2 px-4 flex  rounded-xl  border' onChange={handleFileChange} />
+                    <button className='p-2 px-2 rounded-2xl bg-slate-400 text-white hover:bg-slate-600' onClick={handleUpload}>Upload File</button>
                 </div>
                 <div className='mt-6'>
-                    <p className='justify-end p-2 px-20 font-bold text-green-700 text-lg'>Total Records : {totalRecords}</p>
+                    <p className='justify-end py-2 px-24 font-bold text-green-700 text-lg'>Total Records : {totalRecords}</p>
                 </div>
             </div>
             <div className="table-container flex justify-center items-center mx-10 py-5 overflow-x-auto">
                 <table className="w-full max-w-5xl border-collapse">
-                    <caption className="text-center font-bold text-2xl py-5">Offer Letter CERTIFICATES</caption>
+                    <caption className="text-center font-bold text-2xl py-5">COURSE CERTIFICATES</caption>
                     <thead>
                         <tr className="bg-black text-white text-base">
                             <th className="border p-2">ID</th>
-                            <th className="border p-2">Name</th>
-                            <th className="border p-2">Email</th>
-                            <th className="border p-2">Salary</th>
-                            <th className="border p-2">Job Role</th>
+                            <th className="border p-2">Student Name</th>
+                            <th className="border p-2">TITLE</th>
                             <th className="border p-2">Start Date</th>
-                            <th className="border p-2">Reference Number</th>
+                            <th className="border p-2">End Date</th>
+                            <th className="border p-2">Certificate Number</th>
                             <th className="border p-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredData.length > 0 ? filteredData.map((employe) => (
-                            <tr key={employe._id} className="border hover:bg-gray-100 text-sm">
-                                <td className="border p-2">{employe._id}</td>
-                                <td className="border p-2">{employe.name}</td>
-                                <td className="border p-2">{employe.email}</td>
-                                <td className="border p-2">{employe.salary}</td>
-                                <td className="border p-2">{employe.jobRole}</td>
-                                <td className="border p-2">{new Date(employe.startDate).toLocaleDateString("en-IN")}</td>
-                                <td className="border p-2">{employe.RefereneNo}</td>
+                        {filteredData.length > 0 ? filteredData.map((intern) => (
+                            <tr key={intern._id} className="border hover:bg-gray-100 text-sm">
+                                <td className="border p-2">{intern._id}</td>
+                                <td className="border p-2">{intern.studentName}</td>
+                                <td className="border p-2">{intern.title}</td>
+                                <td className="border p-2">{new Date(intern.startDate).toLocaleDateString("en-IN")}</td>
+                                <td className="border p-2">{new Date(intern.endDate).toLocaleDateString("en-IN")}</td>
+                                <td className="border p-2">{intern.certificateNumber}</td>
                                 <td className="border p-2 flex space-x-2">
-                                    <button className="bg-red-700 text-white hover:bg-red-400 px-2 py-1 rounded-md" onClick={() => delEmploye(employe._id)}>Delete</button>
-                                    <button className="bg-blue-700 text-white hover:bg-blue-400 px-2 py-1 rounded-md" onClick={() => navigate(`/OfferLetter/${employe._id}`)}>Download</button>
+                                    <button className="bg-red-700 text-white hover:bg-red-400 px-2 py-1 rounded-md" onClick={() => delCourse(intern._id)}>Delete</button>
+                                    <button className="bg-blue-700 text-white hover:bg-blue-400 px-2 py-1 rounded-md" onClick={() => navigate(`/CourseCertificate/${intern._id}`)}>Download</button>
                                 </td>
                             </tr>
                         )) : <tr><td colSpan="8" className="text-center py-4 text-gray-500">No results found</td></tr>}
@@ -177,4 +186,4 @@ const OfferLetterList = () => {
         </>
     );
 };
-export default OfferLetterList;
+export default CourseList;
