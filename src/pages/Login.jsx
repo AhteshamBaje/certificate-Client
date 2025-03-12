@@ -14,7 +14,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8003/api5/login", formData);
+            const response = await axios.post("/api5/login", formData);
             localStorage.setItem("token", response.data.token); // Store JWT token
             setMessage(response.data.message);
             setFormData({ name: "", password: "" }); // Clear form after successful login

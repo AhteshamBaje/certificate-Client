@@ -16,7 +16,7 @@ const CourseList = () => {
 
     const searchCourseStudent = async () => {
         try {
-            const searchSname = await axios.get(`http://localhost:8003/api3/searchdata/${searchQuery}`);
+            const searchSname = await axios.get(`/api3/searchdata/${searchQuery}`);
             if (searchSname.data.success) {
                 setFilteredData(searchSname.data.data);
             } else {
@@ -59,7 +59,7 @@ const CourseList = () => {
 
             // ✅ Ensure JSON is sent correctly
             const response = await axios.post(
-                "http://localhost:8003/api3/course/upload",
+                "/api3/course/upload",
                 { jsonData: newRecords }, // Directly send the JSON
                 {
                     headers: {
@@ -81,7 +81,7 @@ const CourseList = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8003/api3/courseList/${page}`);
+            const response = await axios.get(`/api3/courseList/${page}`);
             if (!response.data || response.data.data.length === 0) {
                 alert("No data found.");
                 return;
@@ -101,7 +101,7 @@ const CourseList = () => {
     const delCourse = async (id) => {
         if (!window.confirm("Do you want to delete?")) return;
         try {
-            const res = await axios.delete(`http://localhost:8003/api3/delCourse/${id}`);
+            const res = await axios.delete(`/api3/delCourse/${id}`);
             if (res.status === 200) {
                 alert("Course Student deleted successfully");
                 setFilteredData((prevData) => prevData.filter((intern) => intern._id !== id));
@@ -116,7 +116,7 @@ const CourseList = () => {
     useEffect(() => {
         const fetchTotalRecords = async () => {
             try {
-                const response = await axios.get("http://localhost:8003/api3/totalRecords");
+                const response = await axios.get("/api3/totalRecords");
                 if (response.status === 200) {
                     setTotalRecords(response.data.totalRecords);
                 }

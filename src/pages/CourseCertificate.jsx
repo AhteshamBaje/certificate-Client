@@ -14,7 +14,7 @@ const CourseCertificate = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8003/api3/data/${id}`);
+                const response = await axios.get(`/api3/data/${id}`);
 
                 if (!response.data.data) {
                     console.log("No data found");

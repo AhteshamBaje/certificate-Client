@@ -19,7 +19,7 @@ function OfferLetterForm() {
   const handleDownload = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8003/api2/offer", {
+      const res = await axios.post("/api2/offer", {
         name,
         email,
         salary,

@@ -15,7 +15,7 @@ const OfferLetter = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:8003/api2/data/${id}`);
+        const res = await axios.get(`/api2/data/${id}`);
         if (!res.data.data) {
           alert("No data found.");
           return;

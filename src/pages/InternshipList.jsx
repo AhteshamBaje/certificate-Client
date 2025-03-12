@@ -16,7 +16,7 @@ const InternshipList = () => {
 
     const searchStudent = async () => {
         try {
-            const searchSname = await axios.get(`http://localhost:8003/api/searchdata/${searchQuery}`);
+            const searchSname = await axios.get(`/api/searchdata/${searchQuery}`);
             if (searchSname.data.success) {
                 setFilteredData(searchSname.data.data);
             } else {
@@ -59,7 +59,7 @@ const InternshipList = () => {
 
             // ✅ Ensure JSON is sent correctly
             const response = await axios.post(
-                "http://localhost:8003/api/internship/upload",
+                "/api/internship/upload",
                 { jsonData: newRecords }, // Directly send the JSON
                 {
                     headers: {
@@ -81,7 +81,7 @@ const InternshipList = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8003/api/studentlist/${page}`);
+            const response = await axios.get(`/api/studentlist/${page}`);
             if (!response.data || response.data.data.length === 0) {
                 alert("No data found.");
                 return;
@@ -101,7 +101,7 @@ const InternshipList = () => {
     const delIntern = async (id) => {
         if (!window.confirm("Do you want to delete?")) return;
         try {
-            const res = await axios.delete(`http://localhost:8003/api/delIntern/${id}`);
+            const res = await axios.delete(`/api/delIntern/${id}`);
             if (res.status === 200) {
                 alert("Intern deleted successfully");
                 setFilteredData((prevData) => prevData.filter((intern) => intern._id !== id));
@@ -116,7 +116,7 @@ const InternshipList = () => {
     useEffect(() => {
         const fetchTotalRecords = async () => {
             try {
-                const response = await axios.get("http://localhost:8003/api/totalRecords");
+                const response = await axios.get("/api/totalRecords");
                 if (response.status === 200) {
                     setTotalRecords(response.data.totalRecords);
                 }

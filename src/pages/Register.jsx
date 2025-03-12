@@ -14,7 +14,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8003/api4/", formData);
+            const response = await axios.post("/api4/", formData);
             setMessage(response.data.message);
             setFormData({ name: "", email: "", password: "" }); // Clear form after successful registration
             setTimeout(() => {

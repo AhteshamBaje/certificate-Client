@@ -16,7 +16,7 @@ const OfferLetterList = () => {
 
     const searchEmploye = async () => {
         try {
-            const searchEname = await axios.get(`http://localhost:8003/api2/searchdata2/${searchQuery}`);
+            const searchEname = await axios.get(`/api2/searchdata2/${searchQuery}`);
             if (searchEname.data.success) {
                 setFilteredData(searchEname.data.data);
             } else {
@@ -51,7 +51,7 @@ const OfferLetterList = () => {
 
             // ✅ Ensure JSON is sent correctly
             const response = await axios.post(
-                "http://localhost:8003/api2/offer/upload",
+                "/api2/offer/upload",
                 { jsonData }, // Directly send the JSON
                 {
                     headers: {
@@ -73,7 +73,7 @@ const OfferLetterList = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8003/api2/OfferLetterList/${page}`);
+            const response = await axios.get(`/api2/OfferLetterList/${page}`);
             if (!response.data || response.data.data.length === 0) {
                 alert("No data found.");
                 return;
@@ -93,7 +93,7 @@ const OfferLetterList = () => {
     const delEmploye = async (id) => {
         if (!window.confirm("Do you want to delete?")) return;
         try {
-            const res = await axios.delete(`http://localhost:8003/api2/deleteOfferLeter/${id}`);
+            const res = await axios.delete(`/api2/deleteOfferLeter/${id}`);
             if (res.status === 200) {
                 alert("employe deleted successfully");
                 setFilteredData((prevData) => prevData.filter((employe) => employe._id !== id));
@@ -106,7 +106,7 @@ const OfferLetterList = () => {
     useEffect(() => {
         const fetchTotalRecords2 = async () => {
             try {
-                const response = await axios.get("http://localhost:8003/api2/totalRecords2");
+                const response = await axios.get("/api2/totalRecords2");
                 if (response.status === 200) {
                     setTotalRecords(response.data.totalRecords);
                 }

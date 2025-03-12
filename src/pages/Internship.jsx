@@ -13,7 +13,7 @@ const InternshipCertificate = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8003/api/data/${id}`);
+                const response = await axios.get(`/api/data/${id}`);
 
                 if (!response.data.data) {
                     console.log("No data found");

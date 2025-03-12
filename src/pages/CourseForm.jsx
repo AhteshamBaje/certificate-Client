@@ -19,7 +19,7 @@ function CourseForm() {
     const handleDownload = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:8003/api3/courseForm', { studentName, email , title, startDate, endDate });
+            const res = await axios.post('/api3/courseForm', { studentName, email , title, startDate, endDate });
             
             if (res.status === 200) {
                 const resData = res.data;
