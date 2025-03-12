@@ -50,7 +50,7 @@ export const Form = () => {
     return (
         <>
             <Navbar />
-            <div>
+            <div className='mt-5 '>
                 <Link to="/internshipList" className='hover:underline font-bold text-xl p-2 m-20 '>Internship certificates Lists
                 </Link>
             </div>

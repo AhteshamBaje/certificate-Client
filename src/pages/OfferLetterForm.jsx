@@ -52,7 +52,7 @@ function OfferLetterForm() {
     <>
       {/* Responsive Navigation */}
       <Navbar />
-      <div>
+      <div className="mt-4">
         <Link to="/OfferLetterList" className='hover:underline font-bold text-xl p-2 m-20 '>Offer Letter Lists
         </Link>
       </div>

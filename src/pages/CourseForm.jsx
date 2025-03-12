@@ -49,7 +49,7 @@ function CourseForm() {
    return (
      <>
     <Navbar/>
-    <div>
+    <div className='mt-5'>
         <Link to="/courseList" className='hover:underline font-bold text-xl p-2 m-20 '>Course certificates Lists
         </Link>
     </div>
