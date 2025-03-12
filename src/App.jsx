@@ -13,17 +13,18 @@ import CourseList from './pages/CourseList.jsx';
 import CourseCertificate from './pages/CourseCertificate.jsx';
 import Register from './pages/Register.jsx';
 import Login from './pages/Login.jsx';
+import ProtectedRoute from './pages/ProtectedRoute.jsx';
 
 
 function App() {
   const router = createBrowserRouter([
     {
       path:'/home',
-      element:<Home/>
+      element:(<ProtectedRoute><Home/></ProtectedRoute>)
     },
     {
       path:'/internshipForm',
-      element:<Form/>
+      element:(<ProtectedRoute><Form/></ProtectedRoute>)
     },
     {
       path:'/Internshipcertificate/:id',
@@ -31,13 +32,13 @@ function App() {
     },
     {
       path:'/InternshipList',
-      element:<InternshipList/>
+      element:(<ProtectedRoute><InternshipList/></ProtectedRoute>)
     },
 
     //Offer-Letter paths...
     {
       path:'/offerletterForm',
-      element:<OfferLetterForm/>
+      element:(<ProtectedRoute><OfferLetterForm/></ProtectedRoute>)
     },
     {
       path:'/OfferLetter/:id',
@@ -45,11 +46,11 @@ function App() {
     },
     {
       path:'/OfferLetterList',
-      element:<OfferLetterList/>
+      element:(<ProtectedRoute><OfferLetterList/></ProtectedRoute>)
     },
     {
       path:'/courseForm',
-      element:<CourseForm/>
+      element:(<ProtectedRoute><CourseForm/></ProtectedRoute>)
     },
     {
       path:'/CourseCertificate/:id',
@@ -57,7 +58,7 @@ function App() {
     },
     {
       path:'/courseList',
-      element:<CourseList/>
+      element:(<ProtectedRoute><CourseList/></ProtectedRoute>)
     },
     {
       path:'/',
