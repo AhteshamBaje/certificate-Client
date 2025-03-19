@@ -21,7 +21,7 @@ export const Form = () => {
     const handleDownload = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('/api/internship', { studentName, usn, course, topic, startDate, endDate });
+            const res = await axios.post('http://localhost:8003/api/internship', { studentName, usn, course, topic, startDate, endDate });
             alert('Certificate details saved successfully!');
 
             if (res.status === 200) {
@@ -50,8 +50,8 @@ export const Form = () => {
     return (
         <>
             <Navbar />
-            <div className='mt-5 '>
-                <Link to="/internshipList" className='hover:underline font-bold text-xl p-2 m-20 '>Internship certificates Lists
+            <div className='mt-4 text-center'>
+                <Link to="/internshipList" className='hover:underline font-bold text-xl p-2  '>Internship certificates Lists
                 </Link>
             </div>
             <div className=' flex items-center justify-center min-h-screen px-4 sm:px-2'>
