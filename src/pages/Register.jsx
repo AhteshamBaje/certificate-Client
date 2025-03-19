@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +10,14 @@ const Register = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    useEffect(() => {
+        const register = localStorage.getItem("token");
+
+        if (register) {
+            navigate('/home')
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
