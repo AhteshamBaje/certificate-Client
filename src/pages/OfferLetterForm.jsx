@@ -89,7 +89,7 @@ function OfferLetterForm() {
             <Input
               id="salary"
               onChange={(e) => setSalary(e.target.value)}
-              placeholder="Enter Salary"
+              placeholder="Enter Salary per month"
               className="w-full"
             />
           </div>

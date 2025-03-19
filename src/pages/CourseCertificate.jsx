@@ -47,7 +47,7 @@ const CourseCertificate = () => {
 
                 </div>
 
-                <p className="p-14 text-center font-bold text-2xl">CERTIFICATE OF COMPLITION</p>
+                <p className="p-14 text-center font-bold text-2xl">CERTIFICATE OF COMPLETION</p>
 
                 <div className='text-center text-lg m-2'>
                     <p className=" pt-2">This is to certify that </p>
