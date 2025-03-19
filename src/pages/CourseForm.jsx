@@ -19,13 +19,13 @@ function CourseForm() {
     const handleDownload = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('/api3/courseForm', { studentName, email , title, startDate, endDate });
-            
+            const res = await axios.post('/api3/courseForm', { studentName, email, title, startDate, endDate });
+
             if (res.status === 200) {
                 const resData = res.data;
                 console.log(resData.message);
                 alert('Certificate details saved successfully!');
-                
+
                 navigate(`/CourseCertificate/${resData.Certificate._id}`)
 
                 setStudentName("");
@@ -46,83 +46,83 @@ function CourseForm() {
 
 
 
-   return (
-     <>
-    <Navbar/>
-    <div className='mt-5'>
-        <Link to="/courseList" className='hover:underline font-bold text-xl p-2 m-20 '>Course certificates Lists
-        </Link>
-    </div>
-    <div className=' flex items-center justify-center min-h-screen px-4 sm:px-2'>
-        <form className="w-full max-w-lg bg-white shadow-xl rounded-lg p-6 space-y-4 m-4" >
-            <div>
-                <p className="flex items-center justify-center text-2xl font-bold " >Course Certificate </p>
-                <Label htmlFor="studentName">Name</Label>
-                <Input
-                    id="studentName"
-                    value={studentName}
-                    onChange={(e) => setStudentName(e.target.value)}
-                    placeholder="Enter student Name"
-                    aria-label=" student Name"
-                    style={{ direction: "ltr", textAlign: "left" }}
-                />
+    return (
+        <>
+            <Navbar />
+            <div className='mt-5 text-center'>
+                <Link to="/courseList" className='hover:underline font-bold text-xl p-2 '>Course certificates Lists
+                </Link>
             </div>
+            <div className=' flex items-center justify-center min-h-screen px-4 sm:px-2'>
+                <form className="w-full max-w-lg bg-white shadow-xl rounded-lg p-6 space-y-4 m-4" >
+                    <div>
+                        <p className="flex items-center justify-center text-2xl font-bold " >Course Certificate </p>
+                        <Label htmlFor="studentName">Name</Label>
+                        <Input
+                            id="studentName"
+                            value={studentName}
+                            onChange={(e) => setStudentName(e.target.value)}
+                            placeholder="Enter student Name"
+                            aria-label=" student Name"
+                            style={{ direction: "ltr", textAlign: "left" }}
+                        />
+                    </div>
 
-            <div>
-                <Label htmlFor="email">email</Label>
-                <Input
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter email"
-                    aria-label=" student email"
-                    style={{ direction: "ltr", textAlign: "left" }}
-                />
+                    <div>
+                        <Label htmlFor="email">email</Label>
+                        <Input
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Enter email"
+                            aria-label=" student email"
+                            style={{ direction: "ltr", textAlign: "left" }}
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="title">Course</Label>
+                        <Input
+                            id="title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            placeholder="Enter Course name "
+                            aria-label="title"
+                            style={{ direction: "ltr", textAlign: "left" }}
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="startDate">Start Date</Label>
+                        <Input
+                            id="startDate"
+                            type="date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            aria-label="startDate"
+                            style={{ direction: "ltr", textAlign: "left" }}
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="endDate">End Date</Label>
+                        <Input
+                            id="endDate"
+                            type="date"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            aria-label="endDate"
+                            style={{ direction: "ltr", textAlign: "left" }}
+                        />
+                    </div>
+
+                    <Button type="button" className="w-full px-4 py-2" onClick={handleDownload} >
+                        Download Certificate
+                    </Button>
+                </form>
             </div>
-
-            <div>
-                <Label htmlFor="title">Course</Label>
-                <Input
-                    id="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Enter Course name "
-                    aria-label="title"
-                    style={{ direction: "ltr", textAlign: "left" }}
-                />
-            </div>
-
-            <div>
-                <Label htmlFor="startDate">Start Date</Label>
-                <Input
-                    id="startDate"
-                    type="date"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    aria-label="startDate"
-                    style={{ direction: "ltr", textAlign: "left" }}
-                />
-            </div>
-
-            <div>
-                <Label htmlFor="endDate">End Date</Label>
-                <Input
-                    id="endDate"
-                    type="date"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                    aria-label="endDate"
-                    style={{ direction: "ltr", textAlign: "left" }}
-                />
-            </div>
-
-            <Button type="button" className="w-full px-4 py-2" onClick={handleDownload} >
-                Download Certificate
-            </Button>
-        </form>
-    </div>
-</>
-);
+        </>
+    );
 }
 
 export default CourseForm;

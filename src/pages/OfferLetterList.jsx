@@ -126,9 +126,9 @@ const OfferLetterList = () => {
                     className="w-full max-w-md p-2 border border-gray-300 rounded-lg" />
                 <button className='bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3' onClick={searchEmploye}>Search</button>
             </div>
-            <div className='flex justify-between'>
-                <div className='flex ml-4 mt-6'>
-                    <input type="file" className='p-2 rounded-xl border' onChange={handleFileChange} />
+            <div className='flex flex-col md:flex-row justify-between'>
+                <div className='flex flex-col md:flex-row ml-2 mt-6'>
+                    <input type="file" className='p-2 rounded-xl border border-black mr-2' onChange={handleFileChange} />
                     <button className='p-2 rounded-2xl bg-slate-400 text-white hover:bg-slate-600' onClick={handleUpload}>Upload File</button>
                 </div>
                 <div className='mt-6'>
