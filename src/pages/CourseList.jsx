@@ -16,7 +16,7 @@ const CourseList = () => {
 
     const searchCourseStudent = async () => {
         try {
-            const searchSname = await axios.get(`/api3/searchdata/${searchQuery}`);
+            const searchSname = await axios.get(`/api3/searchdata3/${searchQuery}`);
             if (searchSname.data.success) {
                 setFilteredData(searchSname.data.data);
             } else {
