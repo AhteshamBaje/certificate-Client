@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const [formData, setFormData] = useState({ name: "", password: "" });
+    const [formData, setFormData] = useState({ email: "", password: "" });
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const Login = () => {
             const response = await axios.post("/api5/login", formData);
             localStorage.setItem("token", response.data.token); // Store JWT token
             setMessage(response.data.message);
-            setFormData({ name: "", password: "" }); // Clear form after successful login
+            setFormData({ email: "", password: "" }); // Clear form after successful login
             setTimeout(() => {
                 navigate("/home"); // Navigate to Home after successful login
             }, 1000); // Delay for user to see the success message
@@ -46,9 +46,9 @@ const Login = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <input
                         type="text"
-                        name="name"
-                        placeholder="Name"
-                        value={formData.name}
+                        name="email"
+                        placeholder="Email"
+                        value={formData.email}
                         onChange={handleChange}
                         required
                         className="block w-full p-2 border border-gray-300 rounded"
