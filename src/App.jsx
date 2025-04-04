@@ -28,6 +28,16 @@ function App() {
       element: (<ProtectedRoute><Home /></ProtectedRoute>)
     },
     {
+      path: '/',
+      element: <Login/>
+    },
+    {
+      path: '/login',
+      element: <Login />
+    },
+
+    //Internship paths...
+    {
       path: '/internshipForm',
       element: (<ProtectedRoute><Form /></ProtectedRoute>)
     },
@@ -53,6 +63,8 @@ function App() {
       path: '/OfferLetterList',
       element: (<ProtectedRoute><OfferLetterList /></ProtectedRoute>)
     },
+
+    //course paths...
     {
       path: '/courseForm',
       element: (<ProtectedRoute><CourseForm /></ProtectedRoute>)
@@ -64,14 +76,6 @@ function App() {
     {
       path: '/courseList',
       element: (<ProtectedRoute><CourseList /></ProtectedRoute>)
-    },
-    {
-      path: '/',
-      element: <Register />
-    },
-    {
-      path: '/login',
-      element: <Login />
     },
   ]);
 
