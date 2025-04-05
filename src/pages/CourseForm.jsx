@@ -81,12 +81,12 @@ function CourseForm() {
                     </div>
 
                     <div>
-                        <Label htmlFor="title">Course</Label>
+                        <Label htmlFor="title">Title</Label>
                         <Input
                             id="title"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            placeholder="Enter Course name "
+                            placeholder="Enter Title name "
                             aria-label="title"
                             style={{ direction: "ltr", textAlign: "left" }}
                         />

@@ -49,18 +49,10 @@ const CourseList = () => {
 
             console.log("Parsed JSON Data:", jsonData); // Debugging
 
-            const existingUSNs = new Set(filteredData.map(intern => intern.usn));
-            const newRecords = jsonData.filter(record => !existingUSNs.has(record.usn));
-
-            if (newRecords.length === 0) {
-                alert("No new records found. All records already exist.");
-                return;
-            }
-
             // ✅ Ensure JSON is sent correctly
             const response = await axios.post(
                 "/api3/course/upload",
-                { jsonData: newRecords }, // Directly send the JSON
+                 { jsonData }, // Directly send the JSON
                 {
                     headers: {
                         "Content-Type": "application/json", // Fix header
