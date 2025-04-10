@@ -68,6 +68,8 @@ const CourseList = () => {
         }
     };
 
+
+
     const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));
     const handleNext = () => setPage((prev) => (prev < totalPages ? prev + 1 : prev));
 
@@ -162,8 +164,9 @@ const CourseList = () => {
                                 <td className="border p-2">{new Date(intern.endDate).toLocaleDateString("en-IN")}</td>
                                 <td className="border p-2">{intern.certificateNumber}</td>
                                 <td className="border p-2 flex space-x-2">
+                                    <button className="bg-green-700 text-white hover:bg-blue-400 px-2 py-1 rounded-md" onClick={() => navigate(`/CourseCertificate/${intern._id}`)}>Download</button>
                                     <button className="bg-red-700 text-white hover:bg-red-400 px-2 py-1 rounded-md" onClick={() => delCourse(intern._id)}>Delete</button>
-                                    <button className="bg-blue-700 text-white hover:bg-blue-400 px-2 py-1 rounded-md" onClick={() => navigate(`/CourseCertificate/${intern._id}`)}>Download</button>
+                                    <button className="bg-blue-700 text-white hover:bg-blue-400 px-2 py-1 rounded-md" onClick={() => navigate(`/course/update/${intern._id}`)}>Edit</button>
                                 </td>
                             </tr>
                         )) : <tr><td colSpan="8" className="text-center py-4 text-gray-500">No results found</td></tr>}

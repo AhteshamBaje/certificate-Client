@@ -30,6 +30,12 @@ const InternshipCertificate = () => {
     }, [id]);
     // ✅ Safely handle formData in case it's null
     const { studentName = "", usn = "", course = "", topic = "", startDate = "", endDate = "", certificateNumber = "" } = formData || {};
+    
+    if(!formData){
+        navigate('/Invalidpage')
+        console.log(ghhh);
+        
+    }
 
     const qr = `${import.meta.env.VITE_CLIENTURL}/Internshipcertificate/${id}`;
 

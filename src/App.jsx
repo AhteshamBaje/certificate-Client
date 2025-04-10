@@ -15,6 +15,10 @@ import Register from './pages/Register.jsx';
 import Login from './pages/Login.jsx';
 import ProtectedRoute from './pages/ProtectedRoute.jsx';
 import axios from 'axios';
+import CourseUpdateForm from './pages/CourseUpdateForm.jsx';
+import { InternshipUpdateForm } from './pages/InternshipUpdateForm.jsx';
+import OfferUpdateForm from './pages/OfferUpdateForm.jsx';
+import InvalidPage from './pages/InvalidPage.jsx';
 
 
 function App() {
@@ -35,6 +39,10 @@ function App() {
       path: '/login',
       element: <Login />
     },
+    {
+      path:'/Invalidpage',
+      element:<InvalidPage/>
+    },
 
     //Internship paths...
     {
@@ -48,6 +56,10 @@ function App() {
     {
       path: '/InternshipList',
       element: (<ProtectedRoute><InternshipList /></ProtectedRoute>)
+    },
+    {
+      path:'/Internship/Update/:id',
+      element: (<ProtectedRoute><InternshipUpdateForm /></ProtectedRoute>)
     },
 
     //Offer-Letter paths...
@@ -63,6 +75,10 @@ function App() {
       path: '/OfferLetterList',
       element: (<ProtectedRoute><OfferLetterList /></ProtectedRoute>)
     },
+    {
+      path:'/updateoffer/:id',
+      element:(<ProtectedRoute><OfferUpdateForm/></ProtectedRoute>)
+    },
 
     //course paths...
     {
@@ -77,6 +93,10 @@ function App() {
       path: '/courseList',
       element: (<ProtectedRoute><CourseList /></ProtectedRoute>)
     },
+    {
+      path:'/course/update/:id',
+      element:(<ProtectedRoute><CourseUpdateForm /></ProtectedRoute>)
+    }
   ]);
 
   return (
