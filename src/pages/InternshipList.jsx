@@ -146,11 +146,11 @@ const InternshipList = () => {
                     <p className='justify-end py-2 px-24 font-bold text-green-700 text-lg'>Total Records : {totalRecords}</p>
                 </div>
             </div>
-            <div className="table-container flex justify-center items-center mx-10 py-5 overflow-x-auto">
-                <table className="w-full max-w-5xl border-collapse">
+            <div className="table-container flex justify-center items-center  py-5 overflow-x-auto">
+                <table className="w-full max-w-5xl border-collapse ">
                     <caption className="text-center font-bold text-2xl py-5">INTERNSHIP CERTIFICATES</caption>
                     <thead>
-                        <tr className="bg-black text-white text-base">
+                        <tr className="bg-black text-white text-base rounded-xl">
                             <th className="border p-2">ID</th>
                             <th className="border p-2">Student Name</th>
                             <th className="border p-2">USN</th>
@@ -163,7 +163,7 @@ const InternshipList = () => {
                     </thead>
                     <tbody>
                         {filteredData.length > 0 ? filteredData.map((intern) => (
-                            <tr key={intern._id} className="border hover:bg-gray-100 text-sm">
+                            <tr key={intern._id} className="border hover:bg-gray-100 text-sm rounded-md">
                                 <td className="border p-2">{intern._id}</td>
                                 <td className="border p-2">{intern.studentName}</td>
                                 <td className="border p-2">{intern.usn}</td>
@@ -172,9 +172,16 @@ const InternshipList = () => {
                                 <td className="border p-2">{new Date(intern.endDate).toLocaleDateString("en-IN")}</td>
                                 <td className="border p-2">{intern.certificateNumber}</td>
                                 <td className="border p-2 flex space-x-2">
-                                    <button className="bg-green-700 text-white hover:bg-blue-400 px-2 py-1 rounded-md" onClick={() => navigate(`/Internshipcertificate/${intern._id}`)}>Download</button>
-                                    <button className="bg-red-700 text-white hover:bg-red-400 px-2 py-1 rounded-md" onClick={() => delIntern(intern._id)}>Delete</button>
-                                    <button className="bg-blue-700 text-white hover:bg-blue-400 px-2 py-1 rounded-md" onClick={() => navigate(`/Internship/Update/${intern._id}`)}>Edit</button>
+                                    <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/Internshipcertificate/${intern._id}`)}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2m-1-5-4 5-4-5m9 8h.01" />
+                                    </svg>
+                                    </button>
+                                    <button className="border-2 text-white hover:bg-red-600 px-2 py-1 rounded-md" onClick={() => delIntern(intern._id)}><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30">
+                                        <path d="M 14.984375 2.4863281 A 1.0001 1.0001 0 0 0 14 3.5 L 14 4 L 8.5 4 A 1.0001 1.0001 0 0 0 7.4863281 5 L 6 5 A 1.0001 1.0001 0 1 0 6 7 L 24 7 A 1.0001 1.0001 0 1 0 24 5 L 22.513672 5 A 1.0001 1.0001 0 0 0 21.5 4 L 16 4 L 16 3.5 A 1.0001 1.0001 0 0 0 14.984375 2.4863281 z M 6 9 L 7.7929688 24.234375 C 7.9109687 25.241375 8.7633438 26 9.7773438 26 L 20.222656 26 C 21.236656 26 22.088031 25.241375 22.207031 24.234375 L 24 9 L 6 9 z"></path>
+                                    </svg></button>
+                                    <button className="bg-white border-2 text-white hover:bg-blue-400 px-2 py-1 rounded-md" onClick={() => navigate(`/Internship/Update/${intern._id}`)}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" strokeLinecap="square" strokeLinejoin="round" strokeWidth="2" d="M7 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h1m4-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm7.441 1.559a1.907 1.907 0 0 1 0 2.698l-6.069 6.069L10 19l.674-3.372 6.07-6.07a1.907 1.907 0 0 1 2.697 0Z" />
+                                    </svg></button>
                                 </td>
                             </tr>
                         )) : <tr><td colSpan="8" className="text-center py-4 text-gray-500">No results found</td></tr>}
@@ -190,3 +197,4 @@ const InternshipList = () => {
     );
 };
 export default InternshipList;
+

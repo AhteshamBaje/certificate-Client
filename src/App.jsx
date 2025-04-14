@@ -19,6 +19,8 @@ import CourseUpdateForm from './pages/CourseUpdateForm.jsx';
 import { InternshipUpdateForm } from './pages/InternshipUpdateForm.jsx';
 import OfferUpdateForm from './pages/OfferUpdateForm.jsx';
 import InvalidPage from './pages/InvalidPage.jsx';
+import ExperienceForm from './pages/ExperienceForm.jsx';
+import ExperienceList from './pages/ExperienceList.jsx';
 
 
 function App() {
@@ -96,6 +98,16 @@ function App() {
     {
       path:'/course/update/:id',
       element:(<ProtectedRoute><CourseUpdateForm /></ProtectedRoute>)
+    },
+
+    // Experience paths....
+    {
+      path:'/experienceForm',
+      element:<ExperienceForm/>
+    },
+    {
+      path:'/experienceList',
+      element:<ExperienceList/>
     }
   ]);
 
