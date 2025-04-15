@@ -28,11 +28,11 @@ function ExperienceForm() {
 
                 navigate(`/experienceList`)
 
-                // setStudentName("");
-                // setEmail("");
-                // setTitle("");
-                // setStartDate("");
-                // setEndDate("");
+                setEmployeName("");
+                setEmail("");
+                setJobRole("");
+                setStartDate("");
+                setEndDate("");
             }
 
 

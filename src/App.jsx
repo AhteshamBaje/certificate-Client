@@ -21,6 +21,7 @@ import OfferUpdateForm from './pages/OfferUpdateForm.jsx';
 import InvalidPage from './pages/InvalidPage.jsx';
 import ExperienceForm from './pages/ExperienceForm.jsx';
 import ExperienceList from './pages/ExperienceList.jsx';
+import ExpCertificate from './pages/ExerienceCertificate.jsx';
 
 
 function App() {
@@ -108,6 +109,10 @@ function App() {
     {
       path:'/experienceList',
       element:<ExperienceList/>
+    },
+    {
+      path:'/experienceCertificate',
+      element:<ExpCertificate/>
     }
   ]);
 

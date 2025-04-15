@@ -16,9 +16,9 @@ const ExperienceList = () => {
 
     const searchExperience = async () => {
         try {
-            const searchSname = await axios.get(`/api3/searchdata3/${searchQuery}`);
-            if (searchSname.data.success) {
-                setFilteredData(searchSname.data.data);
+            const searchEname = await axios.get(`/api6/searchdata/${searchQuery}`);
+            if (searchEname.data.success) {
+                setFilteredData(searchEname.data.data);
             } else {
                 alert("No Employe found")
             }
@@ -51,7 +51,7 @@ const ExperienceList = () => {
 
             // ✅ Ensure JSON is sent correctly
             const response = await axios.post(
-                "/api3/course/upload",
+                "/api6/experience/upload",
                 { jsonData }, // Directly send the JSON
                 {
                     headers: {
@@ -75,7 +75,7 @@ const ExperienceList = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`/api3/courseList/${page}`);
+            const response = await axios.get(`/api6/experienceList/${page}`);
             if (!response.data || response.data.data.length === 0) {
                 alert("No data found.");
                 return;
@@ -95,22 +95,22 @@ const ExperienceList = () => {
     const delCourse = async (id) => {
         if (!window.confirm("Do you want to delete?")) return;
         try {
-            const res = await axios.delete(`/api3/delCourse/${id}`);
+            const res = await axios.delete(`/api6/delexperience/${id}`);
             if (res.status === 200) {
-                alert("Course Employe deleted successfully");
+                alert("Experience Employe deleted successfully");
                 setFilteredData((prevData) => prevData.filter((intern) => intern._id !== id));
             } else {
                 alert("Failed to delete. Record may not exist.");
             }
         } catch (error) {
-            alert("Error deleting Course Employe.");
+            alert("Error deleting Experience Employe.");
         }
     };
 
     useEffect(() => {
         const fetchTotalRecords = async () => {
             try {
-                const response = await axios.get("/api3/totalRecords");
+                const response = await axios.get("/api6/totalRecords");
                 if (response.status === 200) {
                     setTotalRecords(response.data.totalRecords);
                 }
@@ -159,11 +159,12 @@ const ExperienceList = () => {
                         {filteredData.length > 0 ? filteredData.map((intern) => (
                             <tr key={intern._id} className="border hover:bg-gray-100 text-sm">
                                 <td className="border p-2">{intern._id}</td>
-                                <td className="border p-2">{intern.studentName}</td>
-                                <td className="border p-2">{intern.title}</td>
+                                <td className="border p-2">{intern.employeName}</td>
+                                <td className="border p-2">{intern.email}</td>                                
+                                <td className="border p-2">{intern.jobRole}</td>
                                 <td className="border p-2">{new Date(intern.startDate).toLocaleDateString("en-IN")}</td>
                                 <td className="border p-2">{new Date(intern.endDate).toLocaleDateString("en-IN")}</td>
-                                <td className="border p-2">{intern.certificateNumber}</td>
+                                <td className="border p-2">{intern.ReferenceNumber}</td>
                                 <td className="border p-2 flex space-x-2">
                                     <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/CourseCertificate/${intern._id}`)}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2m-1-5-4 5-4-5m9 8h.01" />
