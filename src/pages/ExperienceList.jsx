@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Navbar } from '../components/ui/Navbar';
 
-const CourseList = () => {
+const ExperienceList = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
@@ -13,19 +13,18 @@ const CourseList = () => {
     const [totalPages, setTotalPages] = useState();
     const [selectedFile, setSelectedFile] = useState(null);
     const [totalRecords, setTotalRecords] = useState(0)
-    const [issuedStatus, setIssuedStatus] = useState({});
 
-    const searchCourseStudent = async () => {
+    const searchExperience = async () => {
         try {
             const searchSname = await axios.get(`/api3/searchdata3/${searchQuery}`);
             if (searchSname.data.success) {
                 setFilteredData(searchSname.data.data);
             } else {
-                alert("No students found")
+                alert("No Employe found")
             }
         } catch (error) {
             console.error("Search Error:", error);
-            alert(error.response?.data?.message || "Error searching student.");
+            alert(error.response?.data?.message || "Error searching Employe.");
         }
     };
 
@@ -74,34 +73,6 @@ const CourseList = () => {
     const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));
     const handleNext = () => setPage((prev) => (prev < totalPages ? prev + 1 : prev));
 
-      const handledownload = async (intern) => {
-    
-          
-            const today = new Date().toLocaleDateString("en-IN", {
-              day: '2-digit', month: 'short', year: 'numeric'
-            });
-          
-            try {
-              await axios.put(`/api3/issuedDate/${intern._id}`);
-              setIssuedStatus((prev) => ({
-                ...prev,
-                [intern._id]: { date: today }
-              }));
-    
-              setFilteredData((prevData) =>
-                prevData.map((item) =>
-                    item._id === intern._id ? { ...item, issuedDate: today } : item
-                )
-            );
-    
-            // Optional: navigate to certificate page after update
-            navigate(`/CourseCertificate/${intern._id}`);
-            } catch (error) {
-              console.error("Error saving issued date:", error);
-              alert("Failed to update issued date in database");
-            }
-          };
-
     const fetchData = async () => {
         try {
             const response = await axios.get(`/api3/courseList/${page}`);
@@ -126,13 +97,13 @@ const CourseList = () => {
         try {
             const res = await axios.delete(`/api3/delCourse/${id}`);
             if (res.status === 200) {
-                alert("Course Student deleted successfully");
+                alert("Course Employe deleted successfully");
                 setFilteredData((prevData) => prevData.filter((intern) => intern._id !== id));
             } else {
                 alert("Failed to delete. Record may not exist.");
             }
         } catch (error) {
-            alert("Error deleting Course Student.");
+            alert("Error deleting Course Employe.");
         }
     };
 
@@ -158,7 +129,7 @@ const CourseList = () => {
                 <input type="text" placeholder="Search by student name..." value={searchQuery}
                     onChange={(e) => { setSearchQuery(e.target.value); if (e.target.value === "") fetchData(); }}
                     className="w-full max-w-md p-2 border border-gray-300 rounded-lg" />
-                <button className='bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3' onClick={searchCourseStudent}>Search</button>
+                <button className='bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3' onClick={searchExperience}>Search</button>
             </div>
             <div className='flex flex-col md:flex-row justify-between'>
                 <div className='flex flex-col md:flex-row ml-2 mt-6'>
@@ -171,16 +142,16 @@ const CourseList = () => {
             </div>
             <div className="table-container flex justify-center items-center mx-10 py-5 overflow-x-auto">
                 <table className="w-full max-w-5xl border-collapse">
-                    <caption className="text-center font-bold text-2xl py-5">COURSE CERTIFICATES</caption>
+                    <caption className="text-center font-bold text-2xl py-5">EXPERIENCE CERTIFICATES</caption>
                     <thead>
                         <tr className="bg-black text-white text-base">
                             <th className="border p-2">ID</th>
-                            <th className="border p-2">Student Name</th>
-                            <th className="border p-2">TITLE</th>
+                            <th className="border p-2"> Name</th>
+                            <th className="border p-2"> EMAIL</th>
+                            <th className="border p-2">JOB ROLE</th>
                             <th className="border p-2">Start Date</th>
                             <th className="border p-2">End Date</th>
-                            <th className="border p-2">Certificate Number</th>
-                            <th className="border p-2">Issued Date</th>
+                            <th className="border p-2">REFERENCE Number</th>
                             <th className="border p-2">Actions</th>
                         </tr>
                     </thead>
@@ -193,31 +164,8 @@ const CourseList = () => {
                                 <td className="border p-2">{new Date(intern.startDate).toLocaleDateString("en-IN")}</td>
                                 <td className="border p-2">{new Date(intern.endDate).toLocaleDateString("en-IN")}</td>
                                 <td className="border p-2">{intern.certificateNumber}</td>
-                                <td className="border p-2 text-green-700">
-  {(intern.issuedDate || issuedStatus[intern._id]?.date) ? (
-    <div className="flex items-center space-x-1">
-      <span>
-        {
-          new Date(intern.issuedDate || issuedStatus[intern._id]?.date)
-            .toLocaleDateString("en-IN", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            })
-        }
-      </span>
-      <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-      </svg>
-    </div>
-  ) : (
-    <span className="text-gray-400">Not issued</span>
-  )}
-</td>
-
-
                                 <td className="border p-2 flex space-x-2">
-                                    <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md"  onClick={() => handledownload(intern)} ><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/CourseCertificate/${intern._id}`)}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2m-1-5-4 5-4-5m9 8h.01" />
                                     </svg></button>
                                     <button className="border-2 text-white hover:bg-red-600 px-2 py-1 rounded-md" onClick={() => delCourse(intern._id)}><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30">
@@ -242,4 +190,4 @@ const CourseList = () => {
         </>
     );
 };
-export default CourseList;
+export default ExperienceList;

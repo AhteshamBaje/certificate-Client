@@ -23,14 +23,19 @@ const InternshipCertificate = () => {
                 setFormData(response.data.data);
             } catch (error) {
                 console.error("Error fetching data:", error.message);
+                if(!formData){
+                    navigate('/Invalidpage')
+                    
+                }
             }
         };
-
+        
         if (id) fetchData();
     }, [id]);
     // ✅ Safely handle formData in case it's null
     const { studentName = "", usn = "", course = "", topic = "", startDate = "", endDate = "", certificateNumber = "" } = formData || {};
-
+    
+    
     const qr = `${import.meta.env.VITE_CLIENTURL}/Internshipcertificate/${id}`;
 
     return (
