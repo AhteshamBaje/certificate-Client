@@ -10,6 +10,19 @@ const ExpCertificate = () => {
     const [formData, setFormData] = useState(null);
     const navigate = useNavigate();
 
+    const handleDownload = async () => {
+        try {
+            window.print();
+
+            await axios.put(`/api6/issuedDate/${id}`);
+
+            navigate(`/experienceCertificate/${id}`);
+        } catch (error) {
+            console.error("Error saving issued date:", error);
+            alert("Failed to update issued date in database");
+        }
+    }
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,7 +43,7 @@ const ExpCertificate = () => {
         if (id) fetchData();
     }, [id]);
     // ✅ Safely handle formData in case it's null
-    const { employeName = "", jobRole = "",startDate = "", endDate = "", ReferenceNumber = "" } = formData || {};
+    const { employeName = "", jobRole = "", startDate = "", endDate = "", ReferenceNumber = "" } = formData || {};
 
     const qr = `${import.meta.env.VITE_CLIENTURL}/ReferenceNumber/${id}`;
 
@@ -75,7 +88,7 @@ const ExpCertificate = () => {
             </div>
 
             <div className='flex justify-center print:hidden mb-4'>
-                <Button onClick={() => { window.print() }}>Download Certificate</Button>
+                <Button onClick={() => { handleDownload }}>Download Certificate</Button>
             </div>
 
             <div className="flex justify-center mt-4 print:hidden">

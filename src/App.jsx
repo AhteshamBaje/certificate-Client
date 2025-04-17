@@ -111,7 +111,7 @@ function App() {
       element:<ExperienceList/>
     },
     {
-      path:'/experienceCertificate',
+      path:'/experienceCertificate/:id',
       element:<ExpCertificate/>
     }
   ]);

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
-import QRCode from "react-qr-code";
+import QRCode from 'react-qr-code';
 
 const InternshipCertificate = () => {
     const { id } = useParams();
@@ -28,28 +28,30 @@ const InternshipCertificate = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`/api/data/${id}`);
-
                 if (!response.data.data) {
-                    console.log("No data found");
+                    navigate('/Invalidpage');
                     return;
                 }
-
                 setFormData(response.data.data);
             } catch (error) {
                 console.error("Error fetching data:", error.message);
-                if(!formData){
-                    navigate('/Invalidpage')
-                    
-                }
+                navigate('/Invalidpage');
             }
         };
-        
+
         if (id) fetchData();
-    }, [id]);
-    // ✅ Safely handle formData in case it's null
-    const { studentName = "", usn = "", course = "", topic = "", startDate = "", endDate = "", certificateNumber = "" } = formData || {};
-    
-    
+    }, [id, navigate]);
+
+    const {
+        studentName = '',
+        usn = '',
+        course = '',
+        topic = '',
+        startDate = '',
+        endDate = '',
+        certificateNumber = '',
+    } = formData || {};
+
     const qr = `${import.meta.env.VITE_CLIENTURL}/Internshipcertificate/${id}`;
 
     return (
@@ -58,20 +60,29 @@ const InternshipCertificate = () => {
                 style={{ backgroundImage: "url('/images/offerLetter.jpg')" }}
                 className="bg-contain bg-no-repeat w-[100vw] h-[100vh] bg-center flex flex-col px-12 pt-52"
             >
-
                 <div className='flex justify-between'>
-                    <p className="text-justify"><strong>{certificateNumber}</strong></p>
-                    <p className="text-justify"><strong>Date: {new Date().toLocaleDateString("en-IN")}</strong></p>
-
+                    <p className="text-justify font-semibold">{certificateNumber}</p>
+                    <p className="text-justify font-semibold">
+                        Date: {new Date().toLocaleDateString("en-IN")}
+                    </p>
                 </div>
 
                 <p className="p-14 text-center font-bold text-2xl">INTERNSHIP CERTIFICATE</p>
 
-                <p className="text-justify pt-14 ">
-                    This is to certify that <strong>{studentName} </strong>, bearing <strong>[{usn}] </strong>, has successfully completed an internship in <strong>{course} </strong> at <strong>Five Seven I.T Solutions</strong> from  <strong>{new Date(startDate).toLocaleDateString("en-IN")} </strong> to <strong> {new Date(endDate).toLocaleDateString("en-IN")}</strong>.
-                </p><br /> <br />
+                <p className="text-justify pt-14">
+                    This is to certify that <strong>{studentName}</strong>, bearing <strong>[{usn}]</strong>,
+                    has successfully completed an internship in <strong>{course}</strong> at
+                    <strong> Five Seven I.T Solutions</strong> from
+                    <strong> {new Date(startDate).toLocaleDateString("en-IN")}</strong> to
+                    <strong> {new Date(endDate).toLocaleDateString("en-IN")}</strong>.
+                </p>
+
+                <br /><br />
+
                 <p className="text-justify">
-                    During the internship, <strong>{studentName}</strong> actively participated in various <strong>{course} </strong> projects, gaining hands-on experience in <strong>{topic} </strong>. Their dedication, enthusiasm, and commitment to learning were commendable.
+                    During the internship, <strong>{studentName}</strong> actively participated in various
+                    <strong> {course}</strong> projects, gaining hands-on experience in <strong>{topic}</strong>.
+                    Their dedication, enthusiasm, and commitment to learning were commendable.
                     We appreciate their efforts and contributions during the internship and wish them success in their future endeavors.
                 </p>
 
@@ -83,7 +94,7 @@ const InternshipCertificate = () => {
                 <p className="ml-4 font-bold text-sm">Five Seven I.T Solutions</p>
             </div>
 
-            <div className="mx-80 -mt-[370px] ">
+            <div className="mx-80 -mt-[370px]">
                 <QRCode value={qr} className="h-24 w-24" />
             </div>
 
@@ -95,7 +106,9 @@ const InternshipCertificate = () => {
                 <Button onClick={() => navigate(-1)}>Back</Button>
             </div>
 
-            <div className="ml-[450px] my-20"> <strong>ID : {id}</strong> </div>
+            <div className="ml-[450px] my-20">
+                <strong>ID: {id}</strong>
+            </div>
         </>
     );
 };

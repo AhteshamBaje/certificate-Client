@@ -72,32 +72,32 @@ const OfferLetterList = () => {
     const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));
     const handleNext = () => setPage((prev) => (prev < totalPages ? prev + 1 : prev));
 
-    const handledownload = async (employe) => {
+    // const handledownload = async (employe) => {
           
-            const today = new Date().toLocaleDateString("en-IN", {
-              day: '2-digit', month: 'short', year: 'numeric'
-            });
+    //         const today = new Date().toLocaleDateString("en-IN", {
+    //           day: '2-digit', month: 'short', year: 'numeric'
+    //         });
           
-            try {
-              await axios.put(`/api2/issuedDate/${employe._id}`);
-              setIssuedStatus((prev) => ({
-                ...prev,
-                [employe._id]: { date: today }
-              }));
+    //         try {
+    //           await axios.put(`/api2/issuedDate/${employe._id}`);
+    //           setIssuedStatus((prev) => ({
+    //             ...prev,
+    //             [employe._id]: { date: today }
+    //           }));
     
-              setFilteredData((prevData) =>
-                prevData.map((item) =>
-                    item._id === employe._id ? { ...item, issuedDate: today } : item
-                )
-            );
+    //           setFilteredData((prevData) =>
+    //             prevData.map((item) =>
+    //                 item._id === employe._id ? { ...item, issuedDate: today } : item
+    //             )
+    //         );
     
-            // Optional: navigate to certificate page after update
-            navigate(`/OfferLetter/${employe._id}`);
-            } catch (error) {
-              console.error("Error saving issued date:", error);
-              alert("Failed to update issued date in database");
-            }
-          };
+    //         // Optional: navigate to certificate page after update
+    //         navigate(`/OfferLetter/${employe._id}`);
+    //         } catch (error) {
+    //           console.error("Error saving issued date:", error);
+    //           alert("Failed to update issued date in database");
+    //         }
+    //       };
 
     const fetchData = async () => {
         try {
@@ -212,7 +212,7 @@ const OfferLetterList = () => {
 </td>
 
                                 <td className="border p-2 flex space-x-2">
-                                    <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => handledownload(employe)}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/OfferLetter/${employe._id}`)}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2m-1-5-4 5-4-5m9 8h.01" />
                                     </svg></button>
                                     <button className="border-2 text-white hover:bg-red-600 px-2 py-1 rounded-md" onClick={() => delEmploye(employe._id)}><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30">
