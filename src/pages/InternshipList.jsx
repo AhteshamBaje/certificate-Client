@@ -79,35 +79,7 @@ const InternshipList = () => {
 
     const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));
     const handleNext = () => setPage((prev) => (prev < totalPages ? prev + 1 : prev));
-
-    const handledownload = async (intern) => {
-       // navigate(`/Internshipcertificate/${intern._id}`);
-      
-        const today = new Date().toLocaleDateString("en-IN", {
-          day: '2-digit', month: 'short', year: 'numeric'
-        });
-      
-        try {
-          await axios.put(`/api/issuedDate/${intern._id}`);
-          setIssuedStatus((prev) => ({
-            ...prev,
-            [intern._id]: { date: today }
-          }));
-
-          setFilteredData((prevData) =>
-            prevData.map((item) =>
-                item._id === intern._id ? { ...item, issuedDate: today } : item
-            )
-        );
-
-        // Optional: navigate to certificate page after update
-        navigate(`/Internshipcertificate/${intern._id}`);
-        } catch (error) {
-          console.error("Error saving issued date:", error);
-          alert("Failed to update issued date in database");
-        }
-      };
-      
+  
 
     const fetchData = async () => {
         try {
@@ -226,7 +198,7 @@ const InternshipList = () => {
 
 
                                 <td className="border p-2 flex space-x-2">
-                                    <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => handledownload(intern)}
+                                    <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/Internshipcertificate/${intern._id}`)}
                                     ><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2m-1-5-4 5-4-5m9 8h.01" />
                                     </svg>
