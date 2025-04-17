@@ -8,7 +8,29 @@ const CourseCertificate = () => {
     const { id } = useParams();
 
     const [formData, setFormData] = useState(null);
+    const [issuedStatus, setIssuedStatus] = useState("")
     const navigate = useNavigate();
+
+
+    const handledownload = async (intern) => {
+        
+
+        try {
+
+            window.print();
+
+            await axios.put(`/api3/issuedDate/${id}`);
+           
+
+            
+
+            // Optional: navigate to certificate page after update
+            navigate(`/CourseCertificate/${intern._id}`);
+        } catch (error) {
+            console.error("Error saving issued date:", error);
+            alert("Failed to update issued date in database");
+        }
+    };
 
 
     useEffect(() => {
@@ -75,7 +97,7 @@ const CourseCertificate = () => {
             </div>
 
             <div className='flex justify-center print:hidden mb-4'>
-                <Button onClick={() => { window.print() }}>Download Certificate</Button>
+                <Button onClick={handledownload}>Download Certificate</Button>
             </div>
 
             <div className="flex justify-center mt-4 print:hidden">
