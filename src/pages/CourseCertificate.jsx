@@ -19,12 +19,9 @@ const CourseCertificate = () => {
 
             await axios.put(`/api3/issuedDate/${id}`);
 
-            // Optional: navigate to certificate page after update
-<<<<<<< HEAD
-           // navigate(`/CourseCertificate/${formData._id}`);
-=======
+      
             navigate(`/CourseCertificate/${formData._id}`);
->>>>>>> 1aafff54c1cc56a0aa177d5b301cdea0dd4919db
+
         } catch (error) {
             console.error("Error saving issued date:", error);
             alert("Failed to update issued date in database");
