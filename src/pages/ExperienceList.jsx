@@ -12,7 +12,9 @@ const ExperienceList = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState();
     const [selectedFile, setSelectedFile] = useState(null);
-    const [totalRecords, setTotalRecords] = useState(0)
+    const [totalRecords, setTotalRecords] = useState(0);
+    const [issuedStatus, setIssuedStatus] = useState({});
+    
 
     const searchExperience = async () => {
         try {
@@ -152,6 +154,7 @@ const ExperienceList = () => {
                             <th className="border p-2">Start Date</th>
                             <th className="border p-2">End Date</th>
                             <th className="border p-2">REFERENCE Number</th>
+                            <th className="border p-2">Issued Date</th>
                             <th className="border p-2">Actions</th>
                         </tr>
                     </thead>
@@ -165,8 +168,29 @@ const ExperienceList = () => {
                                 <td className="border p-2">{new Date(intern.startDate).toLocaleDateString("en-IN")}</td>
                                 <td className="border p-2">{new Date(intern.endDate).toLocaleDateString("en-IN")}</td>
                                 <td className="border p-2">{intern.ReferenceNumber}</td>
+                                <td className="border p-2 text-green-700">
+                                    {(intern.issuedDate || issuedStatus[intern._id]?.date) ? (
+                                        <div className="flex items-center space-x-1">
+                                            <span>
+                                                {
+                                                    new Date(intern.issuedDate || issuedStatus[intern._id]?.date)
+                                                        .toLocaleDateString("en-IN", {
+                                                            day: "2-digit",
+                                                            month: "short",
+                                                            year: "numeric",
+                                                        })
+                                                }
+                                            </span>
+                                            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        </div>
+                                    ) : (
+                                        <span className="text-gray-400">Not issued</span>
+                                    )}
+                                </td>
                                 <td className="border p-2 flex space-x-2">
-                                    <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/CourseCertificate/${intern._id}`)}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/experienceCertificate/${intern._id}`)}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2m-1-5-4 5-4-5m9 8h.01" />
                                     </svg></button>
                                     <button className="border-2 text-white hover:bg-red-600 px-2 py-1 rounded-md" onClick={() => delCourse(intern._id)}><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30">

@@ -8,24 +8,19 @@ const CourseCertificate = () => {
     const { id } = useParams();
 
     const [formData, setFormData] = useState(null);
-    const [issuedStatus, setIssuedStatus] = useState("")
     const navigate = useNavigate();
 
 
     const handledownload = async (intern) => {
-        
 
         try {
 
             window.print();
 
             await axios.put(`/api3/issuedDate/${id}`);
-           
-
-            
 
             // Optional: navigate to certificate page after update
-            navigate(`/CourseCertificate/${intern._id}`);
+            navigate(`/CourseCertificate/${formData._id}`);
         } catch (error) {
             console.error("Error saving issued date:", error);
             alert("Failed to update issued date in database");

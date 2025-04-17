@@ -28,19 +28,17 @@ const OfferLetter = () => {
     if (id) fetchData();
   }, [id]);
 
-  const handleDownload = async () => {
-    if (!data) return alert("No data found.");
+  const handleDownload = async (employe) => {
+
     try {
-      const input = certificateRef.current;
-      const canvas = await html2canvas(input);
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
-      pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
-      pdf.save(`${data.name}_offer_letter.pdf`);
-      navigate("/");
+          window.print();
+
+          await axios.put(`/api2/issuedDate/${id}`);
+          navigate(`/OfferLetter/${employe._id}`);
     } catch (error) {
-      alert("Error generating certificate.");
-    }
+      console.error("Error saving issued date:", error);
+      alert("Failed to update issued date in database");
+  }
   };
 
   if (!data) return <div>Loading...</div>;
@@ -101,7 +99,7 @@ const OfferLetter = () => {
 
 
       <div className="flex justify-center print:hidden">
-        <Button onClick={() => window.print()}>Download Certificate</Button>
+        <Button onClick={handleDownload}>Download Certificate</Button>
       </div>
 
       {/* Hidden Back Button */}
