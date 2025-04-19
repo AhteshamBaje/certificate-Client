@@ -96,6 +96,7 @@ export const Form = () => {
                     <div>
                         <Label htmlFor="topic">Topics Covered</Label>
                         <Input
+                            required={true}
                             id="topic"
                             value={topic}
                             onChange={(e) => setTopic(e.target.value)}

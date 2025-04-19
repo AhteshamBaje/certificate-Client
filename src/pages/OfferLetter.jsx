@@ -28,13 +28,12 @@ const OfferLetter = () => {
     if (id) fetchData();
   }, [id]);
 
-  const handleDownload = async (employe) => {
+  const handleDownload = async () => {
 
     try {
           window.print();
 
           await axios.put(`/api2/issuedDate/${id}`);
-          navigate(`/OfferLetter/${employe._id}`);
     } catch (error) {
       console.error("Error saving issued date:", error);
       alert("Failed to update issued date in database");

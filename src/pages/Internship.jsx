@@ -6,12 +6,12 @@ import QRCode from 'react-qr-code';
 
 const InternshipCertificate = () => {
     const { id } = useParams();
+    console.log(id);
+    
     const [formData, setFormData] = useState(null);
     const navigate = useNavigate();
 
-    const handledownload = async (intern) => {
-            
-    
+    const handledownload = async () => {
             try {
     
                 window.print();

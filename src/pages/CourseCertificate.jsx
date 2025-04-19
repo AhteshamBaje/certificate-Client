@@ -11,16 +11,13 @@ const CourseCertificate = () => {
     const navigate = useNavigate();
 
 
-    const handledownload = async (intern) => {
+    const handledownload = async () => {
 
         try {
 
             window.print();
 
             await axios.put(`/api3/issuedDate/${id}`);
-
-      
-            navigate(`/CourseCertificate/${formData._id}`);
 
         } catch (error) {
             console.error("Error saving issued date:", error);

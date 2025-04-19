@@ -12,11 +12,11 @@ const ExpCertificate = () => {
 
     const handleDownload = async () => {
         try {
+
             window.print();
 
-            await axios.put(`/api6/issuedDate/${id}`);
+            await axios.put(`/api6/issuedDate/${id}`)
 
-            navigate(`/experienceCertificate/${id}`);
         } catch (error) {
             console.error("Error saving issued date:", error);
             alert("Failed to update issued date in database");
@@ -88,7 +88,7 @@ const ExpCertificate = () => {
             </div>
 
             <div className='flex justify-center print:hidden mb-4'>
-                <Button onClick={() => { handleDownload }}>Download Certificate</Button>
+                <Button onClick={handleDownload }>Download Certificate</Button>
             </div>
 
             <div className="flex justify-center mt-4 print:hidden">
