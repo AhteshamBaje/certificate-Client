@@ -11,7 +11,7 @@ const CourseCertificate = () => {
     const navigate = useNavigate();
 
 
-    const handledownload = async (intern) => {
+    const handledownload = async () => {
 
         try {
 
@@ -19,8 +19,11 @@ const CourseCertificate = () => {
 
             await axios.put(`/api3/issuedDate/${id}`);
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> c3aa914f5dc07dd83d9340d7af2a89617846647c
         } catch (error) {
             console.error("Error saving issued date:", error);
             alert("Failed to update issued date in database");
