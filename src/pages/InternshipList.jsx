@@ -15,38 +15,6 @@ const InternshipList = () => {
     const [totalRecords, setTotalRecords] = useState(0);
     const [issuedStatus, setIssuedStatus] = useState({});
 
-    const fetchTotalRecords = async () => {
-        try {
-            const res = await axios.get('/api/totalRecords');
-            if (res.status === 200) {
-                setTotalRecords(res.data.totalRecords);
-            }
-        } catch (err) {
-            console.error('Error fetching total records:', err);
-        }
-    };
-
-    const fetchData = async () => {
-        try {
-            const res = await axios.get(`/api/studentlist/${page}`);
-            if (res.data && res.data.data.length > 0) {
-                setData(res.data.data);
-                setFilteredData(res.data.data);
-                setTotalPages(res.data.totalPages);
-            } else {
-                setData([]);
-                setFilteredData([]);
-            }
-        } catch (err) {
-            alert('Error fetching student data.');
-        }
-    };
-
-    useEffect(() => {
-        fetchData();
-        fetchTotalRecords();
-    }, [page]);
-
     const searchStudent = async () => {
         if (!searchQuery.trim()) {
             fetchData();
@@ -64,9 +32,15 @@ const InternshipList = () => {
             alert('Error searching student.');
         }
     };
-
+    
     const handleFileChange = (e) => {
-        setSelectedFile(e.target.files[0] || null);
+        if (e.target.files && e.target.files.length > 0) {
+            setSelectedFile(e.target.files[0]); // Ensure a file is selected
+            console.log(e.target.files[0].name);
+
+        } else {
+            setSelectedFile(null);
+        }
     };
 
     const handleUpload = async () => {
@@ -101,6 +75,42 @@ const InternshipList = () => {
             alert('Upload failed.');
         }
     };
+    
+
+    useEffect
+    const fetchTotalRecords = async () => {
+        try {
+            const res = await axios.get('/api/totalRecords');
+            if (res.status === 200) {
+                setTotalRecords(res.data.totalRecords);
+            }
+        } catch (err) {
+            console.error('Error fetching total records:', err);
+        }
+    };
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get(`/api/studentlist/${page}`);
+                if (res.data && res.data.data.length > 0) {
+                    setData(res.data.data);
+                    setFilteredData(res.data.data);
+                    setTotalPages(res.data.totalPages);
+                } else {
+                    setData([]);
+                    setFilteredData([]);
+                }
+            } catch (err) {
+                alert('Error fetching student data.');
+            }
+        };
+        fetchData();
+        fetchTotalRecords();
+
+    }, [page]);
+
 
     const handleDelete = async (id) => {
         if (!window.confirm('Are you sure you want to delete this record?')) return;
