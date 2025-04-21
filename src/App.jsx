@@ -22,6 +22,7 @@ import InvalidPage from './pages/InvalidPage.jsx';
 import ExperienceForm from './pages/ExperienceForm.jsx';
 import ExperienceList from './pages/ExperienceList.jsx';
 import ExpCertificate from './pages/ExerienceCertificate.jsx';
+import ExperienceUpdateForm from './pages/ExperienceUpdateForm.jsx';
 
 
 function App() {
@@ -104,15 +105,19 @@ function App() {
     // Experience paths....
     {
       path:'/experienceForm',
-      element:<ExperienceForm/>
+      element:(<ProtectedRoute><ExperienceForm/></ProtectedRoute>)
     },
     {
       path:'/experienceList',
-      element:<ExperienceList/>
+      element:(<ProtectedRoute><ExperienceList/></ProtectedRoute>)
     },
     {
       path:'/experienceCertificate/:id',
       element:<ExpCertificate/>
+    },
+    {
+      path:'/experience/update/:id',
+      element:(<ProtectedRoute><ExperienceUpdateForm/></ProtectedRoute>)
     }
   ]);
 

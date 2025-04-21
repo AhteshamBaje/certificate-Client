@@ -19,8 +19,7 @@ const CourseCertificate = () => {
 
             await axios.put(`/api3/issuedDate/${id}`);
 
-      
-            navigate(`/CourseCertificate/${formData._id}`);
+
 
         } catch (error) {
             console.error("Error saving issued date:", error);
@@ -55,7 +54,7 @@ const CourseCertificate = () => {
     return (
         <>
             <div
-                style={{ backgroundImage: "url('/images/offerLetter.jpg')" }}
+                style={{ backgroundImage: "url('/images/offerLetter.png')" }}
                 className="bg-contain bg-no-repeat w-[100vw] h-[100vh] bg-center flex flex-col px-12 pt-52"
             >
 
@@ -65,7 +64,7 @@ const CourseCertificate = () => {
 
                 </div>
 
-                <p className="p-14 text-center font-bold text-2xl">CERTIFICATE OF COMPLETION</p>
+                <p className="p-14 text-center font-bold font-serif  text-2xl">CERTIFICATE OF COMPLETION</p>
 
                 <div className='text-center text-lg m-2'>
                     <p className=" pt-2">This is to certify that </p>
@@ -81,14 +80,14 @@ const CourseCertificate = () => {
                 </div>
 
                 <img src="/images/sign.jpeg" alt="Signature" className="h-16 w-28 ml-2 mt-[20px]" />
-                <img src="/images/seal.jpeg" alt="Company Seal" className="w-28 ml-[500px] -mt-[50px]" />
+                <img src="/images/seal.jpeg" alt="Company Seal" className="w-28 ml-[500px] -mt-[65px]" />
 
-                <p className="ml-4 font-bold text-sm">Huma Fatima</p>
+                <p className="ml-4 -mt-10 font-bold text-sm">Huma Fatima</p>
                 <p className="ml-4 font-bold text-sm">Chief Executive Officer</p>
                 <p className="ml-4 font-bold text-sm">Five Seven I.T Solutions</p>
             </div>
 
-            <div className="mx-80 -mt-[300px] ">
+            <div className="mx-80 -mt-[325px] ">
                 <QRCode value={qr} className="h-24 w-24" />
             </div>
 
@@ -100,7 +99,7 @@ const CourseCertificate = () => {
                 <Button onClick={() => navigate(-1)}>Back</Button>
             </div>
 
-            <div className="ml-[450px] my-10"> <strong>ID : {id}</strong> </div>
+            <div className="ml-[450px] my-20"> <strong>ID : {id}</strong> </div>
         </>
     );
 };

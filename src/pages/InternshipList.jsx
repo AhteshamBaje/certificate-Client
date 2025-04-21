@@ -48,10 +48,7 @@ const InternshipList = () => {
     }, [page]);
 
     const searchStudent = async () => {
-        if (!searchQuery.trim()) {
-            fetchData();
-            return;
-        }
+       
         try {
             const res = await axios.get(`/api/searchdata/${searchQuery}`);
             if (res.data.success) {
@@ -128,7 +125,7 @@ const InternshipList = () => {
                     type="text"
                     placeholder="Search by student name..."
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => {setSearchQuery(e.target.value);if (e.target.value === "") fetchData();}}
                     className="w-full max-w-md p-2 border border-gray-300 rounded-lg"
                 />
                 <button

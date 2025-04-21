@@ -81,6 +81,11 @@ export const Navbar = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/experienceForm" className="pb-2 hover:underline font-medium text-xl">
+                  Experience Certificates
+                </Link>
+              </li>
+              <li>
                 <button className="bg-white text-blue-600 mt-3 pb-1 px-2 rounded-md hover:underline font-medium text-xl" onClick={handlelogout}>
                   Logout
                 </button>

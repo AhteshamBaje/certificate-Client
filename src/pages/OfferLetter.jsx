@@ -34,7 +34,7 @@ const OfferLetter = () => {
           window.print();
 
           await axios.put(`/api2/issuedDate/${id}`);
-          navigate(`/OfferLetter/${employe._id}`);
+         
     } catch (error) {
       console.error("Error saving issued date:", error);
       alert("Failed to update issued date in database");
@@ -50,7 +50,7 @@ const OfferLetter = () => {
 
   return (
     <div>
-      <div ref={certificateRef} className="bg-[url(/images/offerLetter.jpg)] bg-contain bg-center h-[100vh] flex flex-col bg-no-repeat">
+      <div ref={certificateRef} className="bg-[url(/images/offerLetter.png)] bg-contain bg-center h-[100vh] flex flex-col bg-no-repeat">
         <div className="p-10 pt-44 text-right">
           <strong>Date: {new Date().toLocaleDateString("en-IN")}</strong>
         </div>
@@ -87,13 +87,13 @@ const OfferLetter = () => {
         <div className="w-24 ml-[550px] -mt-[60px]">
           <img src="/images/seal.jpeg" alt="seal" />
         </div>
-        <p className="ml-10 font-bold text-sm">Huma Fatima</p>
-        <p className="ml-10 font-bold text-sm">Chief Executive Officer</p>
-        <p className="ml-10 font-bold text-sm">Five Seven I.T Solutions</p>
+        <p className="ml-12 -mt-7 font-bold text-sm">Huma Fatima</p>
+        <p className="ml-12 font-bold text-sm">Chief Executive Officer</p>
+        <p className="ml-12 font-bold text-sm">Five Seven I.T Solutions</p>
 
       </div>
 
-      <div className="mx-80 -mt-[290px] ">
+      <div className="mx-80 -mt-[265px] ">
         <QRCode value={qr} className="h-20 w-20" />
       </div>
 
@@ -103,7 +103,7 @@ const OfferLetter = () => {
       </div>
 
       {/* Hidden Back Button */}
-      <div className="flex justify-center mt-4 print:hidden">
+      <div className="flex justify-center mt-0 print:hidden">
         <Button onClick={() => navigate(-1)}>Back</Button>
       </div>
       <div className="ml-[450px] my-10"> <strong>ID : {id}</strong> </div>

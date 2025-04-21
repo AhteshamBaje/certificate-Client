@@ -57,7 +57,7 @@ const InternshipCertificate = () => {
     return (
         <>
             <div
-                style={{ backgroundImage: "url('/images/offerLetter.jpg')" }}
+                style={{ backgroundImage: "url('/images/offerLetter.png')" }}
                 className="bg-contain bg-no-repeat w-[100vw] h-[100vh] bg-center flex flex-col px-12 pt-52"
             >
                 <div className='flex justify-between'>
@@ -70,7 +70,7 @@ const InternshipCertificate = () => {
                 <p className="p-14 text-center font-bold text-2xl">INTERNSHIP CERTIFICATE</p>
 
                 <p className="text-justify pt-14">
-                    This is to certify that <strong>{studentName}</strong>, bearing <strong>[{usn}]</strong>,
+                    This is to certify that <strong>{studentName}</strong>, bearing USN <strong>{usn}</strong>,
                     has successfully completed an internship in <strong>{course}</strong> at
                     <strong> Five Seven I.T Solutions</strong> from
                     <strong> {new Date(startDate).toLocaleDateString("en-IN")}</strong> to
@@ -87,14 +87,14 @@ const InternshipCertificate = () => {
                 </p>
 
                 <img src="/images/sign.jpeg" alt="Signature" className="h-16 w-28 ml-2 mt-[60px]" />
-                <img src="/images/seal.jpeg" alt="Company Seal" className="w-28 ml-[500px] -mt-[70px]" />
+                <img src="/images/seal.jpeg" alt="Company Seal" className="w-28 ml-[500px] -mt-[58px]" />
 
-                <p className="ml-4 font-bold text-sm">Huma Fatima</p>
-                <p className="ml-4 font-bold text-sm">Chief Executive Officer</p>
-                <p className="ml-4 font-bold text-sm">Five Seven I.T Solutions</p>
+                <p className="ml-5 -mt-10 font-bold text-sm">Chief Executive Officer</p>
+                <p className="ml-5 font-bold text-sm">Five Seven I.T Solutions</p>
+                <p className="ml-5  font-bold text-sm">Huma Fatima</p>
             </div>
 
-            <div className="mx-80 -mt-[370px]">
+            <div className="mx-80 -mt-[330px]">
                 <QRCode value={qr} className="h-24 w-24" />
             </div>
 
