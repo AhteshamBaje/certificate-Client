@@ -86,7 +86,6 @@ const InternshipList = () => {
       console.error("Error fetching total records:", err);
     }
   };
-
   
     const fetchData = async () => {
       try {
