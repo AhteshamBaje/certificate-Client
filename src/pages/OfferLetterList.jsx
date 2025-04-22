@@ -152,22 +152,22 @@ const OfferLetterList = () => {
                 <input type="text" placeholder="Search by Employe name..." value={searchQuery}
                     onChange={(e) => { setSearchQuery(e.target.value); if (e.target.value === "") fetchData(); }}
                     className="w-full max-w-md p-2 border border-gray-300 rounded-lg" />
-                <button className='bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3' onClick={searchEmploye}>Search</button>
+                <button className='bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3 ml-2' onClick={searchEmploye}>Search</button>
             </div>
-            <div className='flex flex-col md:flex-row justify-between'>
-                <div className='flex flex-col md:flex-row ml-2 mt-6'>
-                    <input type="file" className='p-2 rounded-xl border border-black mr-2' onChange={handleFileChange} />
+            <div className='flex flex-col md:flex-row justify-between items-center px-4 mt-6'>
+                <div className='flex flex-col md:flex-row gap-2'>
+                    <input type="file" className='p-2 rounded-xl' onChange={handleFileChange} />
                     <button className='p-2 rounded-2xl bg-slate-400 text-white hover:bg-slate-600' onClick={handleUpload}>Upload File</button>
                 </div>
-                <div className='mt-6'>
-                    <p className='justify-end p-2 px-20 font-bold text-green-700 text-lg'>Total Records : {totalRecords}</p>
-                </div>
+                
+                    <p className='mt-2  md:mt-0 font-bold text-green-700 text-lg'>Total Records : {totalRecords}</p>
+                
             </div>
-            <div className="table-container flex justify-center items-center mx-10 py-5 overflow-x-auto">
-                <table className="w-full max-w-5xl border-collapse">
+            <div className=" px-2 py-5 overflow-x-auto">
+                <table className="w-full max-w-6xl mx-auto border-collapse">
                     <caption className="text-center font-bold text-2xl py-5">Offer Letter CERTIFICATES</caption>
-                    <thead>
-                        <tr className="bg-black text-white text-base">
+                    <thead className='bg-black text-white text-base'>
+                        <tr>
                             <th className="border p-2">ID</th>
                             <th className="border p-2">Name</th>
                             <th className="border p-2">Email</th>
@@ -207,18 +207,18 @@ const OfferLetterList = () => {
       </svg>
     </div>
   ) : (
-    <span className="text-gray-400">Not issued</span>
+    <span className="text-red-500">Not issued</span>
   )}
 </td>
 
                                 <td className="border p-2 flex space-x-2">
-                                    <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/OfferLetter/${employe._id}`)}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/OfferLetter/${employe._id}`)}><svg className="w-5 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2m-1-5-4 5-4-5m9 8h.01" />
                                     </svg></button>
-                                    <button className="border-2 text-white hover:bg-red-600 px-2 py-1 rounded-md" onClick={() => delEmploye(employe._id)}><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30">
+                                    <button className="border-2 text-white hover:bg-red-600 px-2 py-1 rounded-md" onClick={() => delEmploye(employe._id)}><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 30 30">
                                         <path d="M 14.984375 2.4863281 A 1.0001 1.0001 0 0 0 14 3.5 L 14 4 L 8.5 4 A 1.0001 1.0001 0 0 0 7.4863281 5 L 6 5 A 1.0001 1.0001 0 1 0 6 7 L 24 7 A 1.0001 1.0001 0 1 0 24 5 L 22.513672 5 A 1.0001 1.0001 0 0 0 21.5 4 L 16 4 L 16 3.5 A 1.0001 1.0001 0 0 0 14.984375 2.4863281 z M 6 9 L 7.7929688 24.234375 C 7.9109687 25.241375 8.7633438 26 9.7773438 26 L 20.222656 26 C 21.236656 26 22.088031 25.241375 22.207031 24.234375 L 24 9 L 6 9 z"></path>
                                     </svg></button>
-                                    <button className="bg-white border-2 text-white hover:bg-blue-400 px-2 py-1 rounded-md" onClick={() => navigate(`/updateoffer/${employe._id}`)}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <button className="bg-white border-2 text-white hover:bg-blue-400 px-2 py-1 rounded-md" onClick={() => navigate(`/updateoffer/${employe._id}`)}><svg className="w-5 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" strokeLinecap="square" strokeLinejoin="round" strokeWidth="2" d="M7 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h1m4-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm7.441 1.559a1.907 1.907 0 0 1 0 2.698l-6.069 6.069L10 19l.674-3.372 6.07-6.07a1.907 1.907 0 0 1 2.697 0Z" />
                                     </svg></button>
                                 </td>
