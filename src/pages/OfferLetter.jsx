@@ -34,7 +34,6 @@ const OfferLetter = () => {
           window.print();
 
           await axios.put(`/api2/issuedDate/${id}`);
-         
     } catch (error) {
       console.error("Error saving issued date:", error);
       alert("Failed to update issued date in database");
