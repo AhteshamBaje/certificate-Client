@@ -73,24 +73,24 @@ const OfferLetterList = () => {
     const handleNext = () => setPage((prev) => (prev < totalPages ? prev + 1 : prev));
 
     // const handledownload = async (employe) => {
-          
+
     //         const today = new Date().toLocaleDateString("en-IN", {
     //           day: '2-digit', month: 'short', year: 'numeric'
     //         });
-          
+
     //         try {
     //           await axios.put(`/api2/issuedDate/${employe._id}`);
     //           setIssuedStatus((prev) => ({
     //             ...prev,
     //             [employe._id]: { date: today }
     //           }));
-    
+
     //           setFilteredData((prevData) =>
     //             prevData.map((item) =>
     //                 item._id === employe._id ? { ...item, issuedDate: today } : item
     //             )
     //         );
-    
+
     //         // Optional: navigate to certificate page after update
     //         navigate(`/OfferLetter/${employe._id}`);
     //         } catch (error) {
@@ -116,6 +116,7 @@ const OfferLetterList = () => {
 
     useEffect(() => {
         fetchData();
+        fetchTotalRecords2();
     }, [page]);
 
     const delEmploye = async (id) => {
@@ -131,19 +132,16 @@ const OfferLetterList = () => {
         }
     };
 
-    useEffect(() => {
-        const fetchTotalRecords2 = async () => {
-            try {
-                const response = await axios.get("/api2/totalRecords2");
-                if (response.status === 200) {
-                    setTotalRecords(response.data.totalRecords);
-                }
-            } catch (error) {
-                console.error("Error fetching total records:", error)
-            };
-        }
-        fetchTotalRecords2();
-    }, []);
+    const fetchTotalRecords2 = async () => {
+        try {
+            const response = await axios.get("/api2/totalRecords2");
+            if (response.status === 200) {
+                setTotalRecords(response.data.totalRecords);
+            }
+        } catch (error) {
+            console.error("Error fetching total records:", error)
+        };
+    }
 
     return (
         <>
@@ -151,15 +149,16 @@ const OfferLetterList = () => {
             <div className="flex justify-center mt-4">
                 <input type="text" placeholder="Search by Employe name..." value={searchQuery}
                     onChange={(e) => { setSearchQuery(e.target.value); if (e.target.value === "") fetchData(); }}
-                    className="w-full max-w-md p-2 border border-gray-300 rounded-lg"/>
-                <button className="bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3 ml-2" onClick={searchEmploye}>Search</button>
+                    className="w-full max-w-md p-2 border border-gray-300 rounded-lg" />
+                <button className="bg-slate-700 text-white hover:bg-slate-400 rounded-xl px-3 ml-2" onClick={searchEmploye}>Search</button>
             </div>
+
             <div className='flex flex-col md:flex-row justify-between items-center px-4 mt-6'>
                 <div className='flex flex-col md:flex-row items-center gap-2'>
                     <input type="file" className='p-2 px-4 flex  rounded-xl  border border-black mr-2' onChange={handleFileChange} />
-                    <button className='p-2 rounded-xl bg-slate-400 text-white hover:bg-slate-600' onClick={handleUpload}>Upload File</button>
+                    <button className='p-2 rounded-xl bg-slate-700 text-white hover:bg-slate-400' onClick={handleUpload}>Upload File</button>
                 </div>
-                    <p className="font-bold text-green-700 text-lg mt-2 md:mt-0">Total Records : {totalRecords}</p>
+                <p className="font-bold text-green-700 text-lg mt-2 md:mt-0">Total Records : {totalRecords}</p>
             </div>
             <div className="overflow-x-auto py-5 px-2">
                 <table className="w-full border-collapse max-w-6xl mx-auto">
@@ -187,27 +186,27 @@ const OfferLetterList = () => {
                                 <td className="border p-2">{employe.jobRole}</td>
                                 <td className="border p-2">{new Date(employe.startDate).toLocaleDateString("en-IN")}</td>
                                 <td className="border p-2">{employe.RefereneNo}</td>
-                                  <td className="border p-2 text-green-700">
-  {(employe.issuedDate || issuedStatus[employe._id]?.date) ? (
-    <div className="flex items-center space-x-1">
-      <span>
-        {
-          new Date(employe.issuedDate || issuedStatus[employe._id]?.date)
-            .toLocaleDateString("en-IN", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            })
-        }
-      </span>
-      <svg className="w-5 h-4 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-      </svg>
-    </div>
-  ) : (
-    <span className="text-gray-400">Not issued</span>
-  )}
-</td>
+                                <td className="border p-2 text-green-700">
+                                    {(employe.issuedDate || issuedStatus[employe._id]?.date) ? (
+                                        <div className="flex items-center space-x-1">
+                                            <span>
+                                                {
+                                                    new Date(employe.issuedDate || issuedStatus[employe._id]?.date)
+                                                        .toLocaleDateString("en-IN", {
+                                                            day: "2-digit",
+                                                            month: "short",
+                                                            year: "numeric",
+                                                        })
+                                                }
+                                            </span>
+                                            <svg className="w-5 h-4 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        </div>
+                                    ) : (
+                                        <span className="text-red-500">Not issued</span>
+                                    )}
+                                </td>
 
                                 <td className="border p-2 flex space-x-2">
                                     <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/OfferLetter/${employe._id}`)}><svg className="w-5 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -226,9 +225,9 @@ const OfferLetterList = () => {
                 </table>
             </div>
             <div className='flex justify-between p-4'>
-                <button className='bg-slate-600 px-2 text-white rounded-lg hover:bg-slate-400' onClick={handlePrev} disabled={page === 1}>Previous</button>
-                <p className='p-3 border-b-2 rounded-lg'>Page {page} of {totalPages}</p>
-                <button className='bg-slate-600 px-2 text-white hover:bg-slate-400 rounded-lg' onClick={handleNext} disabled={page === totalPages}>Next</button>
+                <button className='bg-slate-600 px-2 text-white rounded-lg hover:bg-slate-400 disabled:opacity-50' onClick={handlePrev} disabled={page === 1}>Previous</button>
+                <p className='p-3 border-b-2 rounded-lg bg-slate-300'>Page {page} of {totalPages}</p>
+                <button className='bg-slate-600 px-2 text-white hover:bg-slate-400 rounded-lg disabled:opacity-50' onClick={handleNext} disabled={page === totalPages}>Next</button>
             </div>
         </>
     );

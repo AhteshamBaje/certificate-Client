@@ -14,7 +14,7 @@ const ExperienceList = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [totalRecords, setTotalRecords] = useState(0);
     const [issuedStatus, setIssuedStatus] = useState({});
-    
+
 
     const searchExperience = async () => {
         try {
@@ -42,34 +42,45 @@ const ExperienceList = () => {
 
 
     const handleUpload = async () => {
-        console.log(selectedFile);
+        if (!selectedFile) {
+            alert("Please select a file before uploading.");
+            return;
+        }
+    
         try {
+            console.log("Selected File:", selectedFile);
+    
             const data = await selectedFile.arrayBuffer();
-            const workbook = XLSX.read(data, { type: "array" }); // Fix read method
+            const workbook = XLSX.read(data, { type: "array" });
+    
             const worksheet = workbook.Sheets[workbook.SheetNames[0]];
             const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-
-            console.log("Parsed JSON Data:", jsonData); // Debugging
-
-            // ✅ Ensure JSON is sent correctly
+    
+            if (!jsonData || jsonData.length === 0) {
+                alert("The uploaded file is empty or invalid.");
+                return;
+            }
+    
+            console.log("Parsed JSON Data:", jsonData);
+    
             const response = await axios.post(
-                "/api6/experience/upload",
-                { jsonData }, // Directly send the JSON
+                '/api6/experience/upload',
+                { jsonData },
                 {
                     headers: {
-                        "Content-Type": "application/json", // Fix header
+                        "Content-Type": "application/json",
                     },
                 }
             );
-
+    
             alert(response.data.message);
-            console.log("Uploaded file Path:", response.data);
+            console.log("Upload response:", response.data);
+    
         } catch (error) {
             console.error("Upload error:", error);
             alert(error.response?.data?.message || "Upload failed");
         }
     };
-
 
 
     const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));
@@ -92,6 +103,7 @@ const ExperienceList = () => {
 
     useEffect(() => {
         fetchData();
+        fetchTotalRecords();
     }, [page]);
 
     const delExperience = async (id) => {
@@ -109,19 +121,17 @@ const ExperienceList = () => {
         }
     };
 
-    useEffect(() => {
-        const fetchTotalRecords = async () => {
-            try {
-                const response = await axios.get("/api6/totalRecords");
-                if (response.status === 200) {
-                    setTotalRecords(response.data.totalRecords);
-                }
-            } catch (error) {
-                console.error("Error fetching total records:", error)
-            };
-        }
-        fetchTotalRecords();
-    }, []);
+
+    const fetchTotalRecords = async () => {
+        try {
+            const response = await axios.get("/api6/totalRecords");
+            if (response.status === 200) {
+                setTotalRecords(response.data.totalRecords);
+            }
+        } catch (error) {
+            console.error("Error fetching total records:", error)
+        };
+    }
 
 
     return (
@@ -131,15 +141,15 @@ const ExperienceList = () => {
                 <input type="text" placeholder="Search by student name..." value={searchQuery}
                     onChange={(e) => { setSearchQuery(e.target.value); if (e.target.value === "") fetchData(); }}
                     className="w-full max-w-md p-2 border border-gray-300 rounded-lg" />
-                <button className='bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3' onClick={searchExperience}>Search</button>
+                <button className='bg-slate-700 text-white hover:bg-slate-400 rounded-xl px-3 ml-2' onClick={searchExperience}>Search</button>
             </div>
             <div className='flex flex-col md:flex-row justify-between items-center px-4 mt-6'>
                 <div className='flex flex-col md:flex-row items-center gap-2'>
                     <input type="file" className='p-2 px-4 flex  rounded-xl  border border-black mr-2' onChange={handleFileChange} />
-                    <button className='rounded-xl bg-slate-400 text-white hover:bg-slate-600 p-2' onClick={handleUpload}>Upload File</button>
+                    <button className='rounded-xl bg-slate-700 text-white hover:bg-slate-400 p-2 gap-2' onClick={handleUpload}>Upload File</button>
                 </div>
-                
-                    <p  className="font-bold text-green-700 text-lg mt-2 md:mt-0">Total Records : {totalRecords}</p>
+
+                <p className="font-bold text-green-700 text-lg mt-2 md:mt-0">Total Records : {totalRecords}</p>
 
             </div>
             <div className="overflow-x-auto py-5 px-2">
@@ -163,7 +173,7 @@ const ExperienceList = () => {
                             <tr key={intern._id} className="border hover:bg-gray-100 text-sm">
                                 <td className="border p-2">{intern._id}</td>
                                 <td className="border p-2">{intern.employeName}</td>
-                                <td className="border p-2">{intern.email}</td>                                
+                                <td className="border p-2">{intern.email}</td>
                                 <td className="border p-2">{intern.jobRole}</td>
                                 <td className="border p-2">{new Date(intern.startDate).toLocaleDateString("en-IN")}</td>
                                 <td className="border p-2">{new Date(intern.endDate).toLocaleDateString("en-IN")}</td>
@@ -186,7 +196,7 @@ const ExperienceList = () => {
                                             </svg>
                                         </div>
                                     ) : (
-                                        <span className="text-gray-400">Not issued</span>
+                                        <span className="text-red-500">Not issued</span>
                                     )}
                                 </td>
                                 <td className="border p-2 flex space-x-2">
@@ -208,9 +218,9 @@ const ExperienceList = () => {
                 </table>
             </div>
             <div className='flex justify-between p-4'>
-                <button className='bg-slate-600 px-2 text-white rounded-lg hover:bg-slate-400' onClick={handlePrev} disabled={page === 1}>Previous</button>
-                <p className='p-3 border-b-2 rounded-lg'>Page {page} of {totalPages}</p>
-                <button className='bg-slate-600 px-2 text-white hover:bg-slate-400 rounded-lg' onClick={handleNext} disabled={page === totalPages}>Next</button>
+                <button className='bg-slate-600 px-2 text-white rounded-lg hover:bg-slate-400 disabled:opacity-50' onClick={handlePrev} disabled={page === 1}>Previous</button>
+                <p className='p-3 border-b-2 rounded-lg bg-slate-300'>Page {page} of {totalPages}</p>
+                <button className='bg-slate-600 px-2 text-white hover:bg-slate-400 rounded-lg disabled:opacity-50' onClick={handleNext} disabled={page === totalPages}>Next</button>
             </div>
         </>
     );

@@ -15,6 +15,8 @@ const ExpCertificate = () => {
       window.print();
 
       await axios.put(`/api6/issuedDate/${id}`);
+      console.log("issueExperienceDate");
+
     } catch (error) {
       console.error("Error saving issued date:", error);
       alert("Failed to update issued date in database");

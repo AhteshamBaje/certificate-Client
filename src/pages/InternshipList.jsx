@@ -137,7 +137,7 @@ const InternshipList = () => {
                     className="w-full max-w-md p-2 border border-gray-300 rounded-lg"
                 />
                 <button
-                    className="bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3 ml-2"
+                    className="bg-slate-700 text-white hover:bg-slate-400 rounded-xl px-3 ml-2"
                     onClick={searchStudent} >
                     Search
                 </button>
@@ -145,8 +145,8 @@ const InternshipList = () => {
 
             <div className="flex flex-col md:flex-row justify-between items-center px-4 mt-6">
                 <div className="flex flex-col md:flex-row items-center gap-2">
-                    <input type="file" className="border p-2 rounded-xl" onChange={handleFileChange} />
-                    <button className="bg-slate-400 text-white hover:bg-slate-600 p-2 rounded-xl" onClick={handleUpload}>Upload File</button>
+                    <input type="file" className="border p-2 rounded-xl px-4 flex border-black mr-2" onChange={handleFileChange} />
+                    <button className="bg-slate-700 text-white hover:bg-slate-400 p-2 rounded-xl" onClick={handleUpload}>Upload File</button>
                 </div>
                 <p className="font-bold text-green-700 text-lg mt-2 md:mt-0">Total Records: {totalRecords}</p>
             </div>
@@ -183,7 +183,7 @@ const InternshipList = () => {
                                             day: "2-digit",
                                             month: "short",
                                             year: "numeric"
-                                        }) : <span className="text-gray-400">Not issued</span>}
+                                        }) : <span className="text-red-500">Not issued</span>}
                                     </td>
                                     <td className="border p-2 flex justify-center space-x-2">
                                         <button onClick={() => navigate(`/Internshipcertificate/${intern._id}`)} className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md">
@@ -214,9 +214,9 @@ const InternshipList = () => {
             </div>
 
             <div className="flex justify-between items-center px-6 py-4">
-                <button onClick={handlePrev} disabled={page === 1} className="bg-slate-600 text-white px-3 py-1 rounded disabled:opacity-50">Previous</button>
-                <span className="text-lg">Page {page} of {totalPages}</span>
-                <button onClick={handleNext} disabled={page === totalPages} className="bg-slate-600 text-white px-3 py-1 rounded disabled:opacity-50">Next</button>
+                <button onClick={handlePrev} disabled={page === 1} className="bg-slate-600 p-3 text-white rounded-lg hover:bg-slate-400 disabled:opacity-50">Previous</button>
+                <span className="p-3 border-b-2 rounded-lg bg-slate-300">Page {page} of {totalPages}</span>
+                <button onClick={handleNext} disabled={page === totalPages} className="bg-slate-600 p-3 text-white hover:bg-slate-400 rounded-lg disabled:opacity-50">Next</button>
             </div>
         </>
     );

@@ -74,7 +74,7 @@ const CourseList = () => {
     const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));
     const handleNext = () => setPage((prev) => (prev < totalPages ? prev + 1 : prev));
 
-       const fetchData = async () => {
+    const fetchData = async () => {
         try {
             const response = await axios.get(`/api3/courseList/${page}`);
             if (!response.data || response.data.data.length === 0) {
@@ -91,6 +91,7 @@ const CourseList = () => {
 
     useEffect(() => {
         fetchData();
+        fetchTotalRecords();
     }, [page]);
 
     const delCourse = async (id) => {
@@ -108,19 +109,17 @@ const CourseList = () => {
         }
     };
 
-    useEffect(() => {
-        const fetchTotalRecords = async () => {
-            try {
-                const response = await axios.get("/api3/totalRecords");
-                if (response.status === 200) {
-                    setTotalRecords(response.data.totalRecords);
-                }
-            } catch (error) {
-                console.error("Error fetching total records:", error)
-            };
-        }
-        fetchTotalRecords();
-    }, []);
+    const fetchTotalRecords = async () => {
+        try {
+            const response = await axios.get("/api3/totalRecords");
+            if (response.status === 200) {
+                setTotalRecords(response.data.totalRecords);
+            }
+        } catch (error) {
+            console.error("Error fetching total records:", error)
+        };
+    }
+
 
 
     return (
@@ -130,15 +129,15 @@ const CourseList = () => {
                 <input type="text" placeholder="Search by student name..." value={searchQuery}
                     onChange={(e) => { setSearchQuery(e.target.value); if (e.target.value === "") fetchData(); }}
                     className="w-full max-w-md p-2 border border-gray-300 rounded-lg" />
-                <button className='bg-slate-400 text-white hover:bg-slate-600 rounded-xl px-3 ml-2' onClick={searchCourseStudent}>Search</button>
+                <button className='bg-slate-700 text-white hover:bg-slate-400 rounded-xl px-3 ml-2' onClick={searchCourseStudent}>Search</button>
             </div>
 
             <div className="flex flex-col md:flex-row justify-between items-center px-4 mt-6">
                 <div className='flex flex-col md:flex-row items-center gap-2'>
                     <input type="file" className='p-2 px-4 flex  rounded-xl  border border-black mr-2' onChange={handleFileChange} />
-                    <button className='rounded-xl bg-slate-400 text-white hover:bg-slate-600 p-2' onClick={handleUpload}>Upload File</button>
+                    <button className='rounded-xl bg-slate-700 text-white hover:bg-slate-400 p-2' onClick={handleUpload}>Upload File</button>
                 </div>
-                    <p className="font-bold text-green-700 text-lg mt-2 md:mt-0">Total Records : {totalRecords}</p>
+                <p className="font-bold text-green-700 text-lg mt-2 md:mt-0">Total Records : {totalRecords}</p>
             </div>
             <div className="overflow-x-auto py-5 px-2">
                 <table className="w-full border-collapse max-w-6xl mx-auto">
@@ -182,7 +181,7 @@ const CourseList = () => {
                                             </svg>
                                         </div>
                                     ) : (
-                                        <span className="text-gray-400">Not issued</span>
+                                        <span className="text-red-500">Not issued</span>
                                     )}
                                 </td>
 
@@ -206,9 +205,12 @@ const CourseList = () => {
                 </table>
             </div>
             <div className='flex justify-between p-4'>
-                <button className='bg-slate-600 px-2 text-white rounded-lg hover:bg-slate-400' onClick={handlePrev} disabled={page === 1}>Previous</button>
-                <p className='p-3 border-b-2 rounded-lg'>Page {page} of {totalPages}</p>
-                <button className='bg-slate-600 px-2 text-white hover:bg-slate-400 rounded-lg' onClick={handleNext} disabled={page === totalPages}>Next</button>
+
+                <button className='bg-slate-600 px-2 text-white rounded-lg hover:bg-slate-400 disabled:opacity-50' onClick={handlePrev} disabled={page === 1}>Previous</button>
+
+                <p className='p-3 border-b-2 rounded-lg bg-slate-300'>Page {page} of {totalPages}</p>
+                
+                <button className='bg-slate-600 px-2 text-white hover:bg-slate-400 rounded-lg disabled:opacity-50' onClick={handleNext} disabled={page === totalPages}>Next</button>
             </div>
         </>
     );
