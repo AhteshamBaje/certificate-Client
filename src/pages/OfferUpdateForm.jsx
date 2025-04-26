@@ -105,6 +105,7 @@ function OfferUpdateForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter Email"
+              disabled
               className="w-full"
             />
           </div>

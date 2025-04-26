@@ -46,6 +46,7 @@ const ExpCertificate = () => {
     employeName = "",
     jobRole = "",
     startDate = "",
+    responsibilities = "",
     endDate = "",
     ReferenceNumber = "",
   } = formData || {};
@@ -69,8 +70,8 @@ const ExpCertificate = () => {
 
         <p className="p-14 text-center font-bold font-serif text-2xl">EXPERIENCE LETTER</p>
 
-        <div className=" text-lg m-2">
-          <p className=" pt-2" text-justify>
+        <div className=" text-lg m-2 text-justify">
+          <p className=" pt-2">
             This is to certify that <strong>{employeName} </strong> was employed
             with Five Seven IT as a <strong>{jobRole}</strong> From <strong>{new Date(startDate).toLocaleDateString("en-IN")} </strong>{" "}
             to <strong> {new Date(endDate).toLocaleDateString("en-IN")}</strong>.
@@ -78,12 +79,11 @@ const ExpCertificate = () => {
 
           <p className=" pt-2">
             During their tenure with us, <strong>{employeName} </strong> was
-            responsible for [brief summary of responsibilities or job profile].
+            responsible for <strong>{responsibilities}</strong> .
             He/She demonstrated a high level of professionalism, dedication, and a
             strong commitment to the responsibilities assigned. His/Her
             contributions played a significant role in the success of several
-            projects, especially in [mention any notable project/achievement if
-            applicable].
+            projects.
           </p>
           <br></br>
 

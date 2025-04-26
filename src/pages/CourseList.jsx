@@ -132,9 +132,9 @@ const CourseList = () => {
             </div>
 
             {/* Upload and Total Records */}
-            <div className="flex flex-col md:flex-row justify-between items-center px-4 mt-6">
-                <div className="flex flex-col md:flex-row gap-2">
-                    <input type="file" className="p-2 rounded-xl" onChange={handleFileChange} />
+            <div className="flex flex-col md:flex-row justify-between items-center px-4 mt-6 ">
+                <div className="flex flex-col md:flex-row gap-2 ">
+                    <input type="file" className="p-2 rounded-xl border border-black " onChange={handleFileChange} />
                     <button
                         className="p-2 rounded-2xl bg-slate-700 text-white hover:bg-slate-400"
                         onClick={handleUpload}

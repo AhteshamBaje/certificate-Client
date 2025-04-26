@@ -10,6 +10,7 @@ function ExperienceForm() {
     const [employeName, setEmployeName] = useState("");
     const [email, setEmail] = useState("");
     const [jobRole, setJobRole] = useState("");
+    const [responsibilities , setResponsibilities] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
@@ -19,7 +20,7 @@ function ExperienceForm() {
     const handleDownload = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('/api6/experienceForm', { employeName, email, jobRole, startDate, endDate });
+            const res = await axios.post('/api6/experienceForm', { employeName, email, jobRole, responsibilities, startDate, endDate });
 
             if (res.status === 200) {
                 const resData = res.data;
@@ -31,6 +32,7 @@ function ExperienceForm() {
                 setEmployeName("");
                 setEmail("");
                 setJobRole("");
+                setResponsibilities("");
                 setStartDate("");
                 setEndDate("");
             }
@@ -88,6 +90,18 @@ function ExperienceForm() {
                             onChange={(e) => setJobRole(e.target.value)}
                             placeholder="Enter job Role"
                             aria-label="jobRole"
+                            style={{ direction: "ltr", textAlign: "left" }}
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="Responsibilities">Responsibilities</Label>
+                        <Input
+                            id="Responsibilities"
+                            value={responsibilities}
+                            onChange={(e) => setResponsibilities(e.target.value)}
+                            placeholder="Enter Responsibilities"
+                            aria-label="Responsibilities"
                             style={{ direction: "ltr", textAlign: "left" }}
                         />
                     </div>

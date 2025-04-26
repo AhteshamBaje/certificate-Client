@@ -10,63 +10,66 @@ function ExperienceUpdateForm() {
     const [employeName, setEmployeName] = useState("");
     const [email, setEmail] = useState("");
     const [jobRole, setJobRole] = useState("");
+    const [responsibilities , setResponsibilities] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
-    const {id} =useParams();
+    const { id } = useParams();
     console.log(id);
-    
+
     const navigate = useNavigate();
 
-     useEffect(() => {
-            const fetchExperience = async () => {
-                try {
-                    const res = await axios.get(`/api6/data/${id}`);
-                    const exp = res.data.data;
-    
-                    setEmployeName(exp.employeName || "");
-                    setEmail(exp.email || "");
-                    setJobRole(exp.jobRole || "");
-                    setStartDate(exp.startDate ? exp.startDate.slice(0, 10) : ""); // Format date
-                    setEndDate(exp.endDate ? exp.endDate.slice(0, 10) : "");
-                } catch (error) {
-                    console.error("Error fetching course:", error);
-                    alert("Failed to load course data.");
-                }
-            };
-    
-            if (id) {
-                fetchExperience();
-            }
-        }, [id]);
-
-        const handleUpdate = async (e) => {
-            e.preventDefault();
+    useEffect(() => {
+        const fetchExperience = async () => {
             try {
-                const res = await axios.put(`/api6/updateexperience/${id}`, { employeName, email, jobRole, startDate, endDate });
-    
-                if (res.status === 200) {
-                    const resData = res.data;
-                    console.log(resData.message);
-                    alert('Certificate details updated successfully!');
-    
-                    navigate('/experienceList')
-    
-                    setEmployeName("");
-                    setEmail("");
-                    setJobRole("");
-                    setStartDate("");
-                    setEndDate("");
-                }
-    
-    
-    
+                const res = await axios.get(`/api6/data/${id}`);
+                const exp = res.data.data;
+
+                setEmployeName(exp.employeName || "");
+                setEmail(exp.email || "");
+                setJobRole(exp.jobRole || "");
+                setResponsibilities(exp.responsibilities || "");
+                setStartDate(exp.startDate ? exp.startDate.slice(0, 10) : ""); // Format date
+                setEndDate(exp.endDate ? exp.endDate.slice(0, 10) : "");
             } catch (error) {
-                console.error('Error updating certificate details:', error);
-                alert(error.response.data.message)
+                console.error("Error fetching course:", error);
+                alert("Failed to load course data.");
             }
         };
-    
+
+        if (id) {
+            fetchExperience();
+        }
+    }, [id]);
+
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.put(`/api6/updateexperience/${id}`, { employeName, email, jobRole, responsibilities ,startDate, endDate });
+
+            if (res.status === 200) {
+                const resData = res.data;
+                console.log(resData.message);
+                alert('Certificate details updated successfully!');
+
+                navigate('/experienceList')
+
+                setEmployeName("");
+                setEmail("");
+                setJobRole("");
+                setResponsibilities("");
+                setStartDate("");
+                setEndDate("");
+            }
+
+
+
+        } catch (error) {
+            console.error('Error updating certificate details:', error);
+            alert(error.response.data.message)
+        }
+    };
+
 
     return (
         <>
@@ -99,6 +102,7 @@ function ExperienceUpdateForm() {
                             placeholder="Enter email"
                             aria-label=" student email"
                             style={{ direction: "ltr", textAlign: "left" }}
+                            disabled
                         />
                     </div>
 
@@ -110,6 +114,18 @@ function ExperienceUpdateForm() {
                             onChange={(e) => setJobRole(e.target.value)}
                             placeholder="Enter job Role"
                             aria-label="jobRole"
+                            style={{ direction: "ltr", textAlign: "left" }}
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="Responsibilities">Responsibilities</Label>
+                        <Input
+                            id="Responsibilities"
+                            value={responsibilities}
+                            onChange={(e) => setResponsibilities(e.target.value)}
+                            placeholder="Enter Responsibilities"
+                            aria-label="Responsibilities"
                             style={{ direction: "ltr", textAlign: "left" }}
                         />
                     </div>
@@ -139,7 +155,7 @@ function ExperienceUpdateForm() {
                     </div>
 
                     <Button type="button" className="w-full px-4 py-2" onClick={handleUpdate} >
-                            Update
+                        Update
                     </Button>
                 </form>
             </div>

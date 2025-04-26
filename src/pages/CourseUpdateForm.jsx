@@ -101,6 +101,7 @@ function CourseUpdateForm() {
                             placeholder="Enter email"
                             aria-label=" student email"
                             style={{ direction: "ltr", textAlign: "left" }}
+                            disabled
                         />
                     </div>
 

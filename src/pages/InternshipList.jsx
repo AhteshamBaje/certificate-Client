@@ -153,7 +153,7 @@ const InternshipList = () => {
                 <div className="flex flex-col md:flex-row items-center gap-2">
                     <input
                         type="file"
-                        className="border p-2 rounded-xl"
+                        className="border border-black p-2 rounded-xl"
                         onChange={handleFileChange}
                     />
                     <button

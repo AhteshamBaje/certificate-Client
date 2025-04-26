@@ -242,6 +242,7 @@ const ExperienceList = () => {
                                         </button>
                                         <button
                                             className="bg-white border-2 text-white hover:bg-blue-400 px-2 py-1 rounded-md"
+
                                             onClick={() => navigate(`/experience/update/${intern._id}`)}
                                         >
                                            <svg
