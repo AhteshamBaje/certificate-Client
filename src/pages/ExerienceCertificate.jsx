@@ -79,7 +79,7 @@ const ExpCertificate = () => {
 
           <p className=" pt-2">
             During their tenure with us, <strong>{employeName} </strong> was
-            responsible for <strong>{responsibilities}</strong> .
+            responsible for <strong>{responsibilities}</strong>.
             He/She demonstrated a high level of professionalism, dedication, and a
             strong commitment to the responsibilities assigned. His/Her
             contributions played a significant role in the success of several

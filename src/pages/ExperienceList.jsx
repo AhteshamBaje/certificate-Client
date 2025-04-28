@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Navbar } from '../components/ui/Navbar';
@@ -15,6 +15,7 @@ const ExperienceList = () => {
     const [totalRecords, setTotalRecords] = useState(0);
     const [issuedStatus, setIssuedStatus] = useState({});
 
+    
     const searchExperience = async () => {
         try {
             const res = await axios.get(`/api6/searchdata/${searchQuery}`);
@@ -37,6 +38,8 @@ const ExperienceList = () => {
             setSelectedFile(null);
         }
     };
+    
+    const InputFileRef = useRef(null);
 
     const handleUpload = async () => {
         if (!selectedFile) {
@@ -66,6 +69,12 @@ const ExperienceList = () => {
             );
 
             alert(response.data.message);
+            fetchData();
+            fetchTotalRecords();
+
+            if(InputFileRef.current){
+                InputFileRef.current.value="";
+            }
         } catch (error) {
             console.error("Upload error:", error);
             alert(error.response?.data?.message || "Upload failed");
@@ -90,6 +99,22 @@ const ExperienceList = () => {
         }
     };
 
+    const delExperience = async (id) => {
+        if (!window.confirm("Do you want to delete?")) return;
+        try {
+            const res = await axios.delete(`/api6/delexperience/${id}`);
+            if (res.status === 200) {
+                alert("Experience record deleted successfully");
+                setFilteredData((prevData) => prevData.filter((intern) => intern._id !== id));
+                fetchTotalRecords();
+            } else {
+                alert("Failed to delete. Record may not exist.");
+            }
+        } catch (error) {
+            alert("Error deleting experience record.");
+        }
+    };
+    
     const fetchTotalRecords = async () => {
         try {
             const response = await axios.get("/api6/totalRecords");
@@ -100,26 +125,13 @@ const ExperienceList = () => {
             console.error("Error fetching total records:", error);
         }
     };
-
-    const delExperience = async (id) => {
-        if (!window.confirm("Do you want to delete?")) return;
-        try {
-            const res = await axios.delete(`/api6/delexperience/${id}`);
-            if (res.status === 200) {
-                alert("Experience record deleted successfully");
-                setFilteredData((prevData) => prevData.filter((item) => item._id !== id));
-            } else {
-                alert("Failed to delete. Record may not exist.");
-            }
-        } catch (error) {
-            alert("Error deleting experience record.");
-        }
-    };
-
+    
     useEffect(() => {
         fetchData();
         fetchTotalRecords();
     }, [page]);
+
+
 
     return (
         <>
@@ -145,7 +157,7 @@ const ExperienceList = () => {
             {/* Upload & Total Records */}
             <div className='flex flex-col md:flex-row justify-between items-center px-4 mt-6'>
                 <div className='flex flex-col md:flex-row items-center gap-2'>
-                    <input type="file" className='p-2 px-4 rounded-xl border border-black' onChange={handleFileChange} />
+                    <input type="file" className='p-2 px-4 rounded-xl border border-black' onChange={handleFileChange} ref={InputFileRef} />
                     <button className='rounded-xl bg-slate-700 text-white hover:bg-slate-400 p-2' onClick={handleUpload}>
                         Upload File
                     </button>

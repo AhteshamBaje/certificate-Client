@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Navbar } from "../components/ui/Navbar";
+import { Input } from "postcss";
 
 const InternshipList = () => {
     const navigate = useNavigate();
@@ -38,6 +39,8 @@ const InternshipList = () => {
         }
     };
 
+    const InputFileRef = useRef(null);
+
     const handleUpload = async () => {
         if (!selectedFile) {
             alert("Please select a file first.");
@@ -69,6 +72,10 @@ const InternshipList = () => {
             alert(res.data.message);
             fetchData();
             fetchTotalRecords();
+
+            if(InputFileRef.current){
+                InputFileRef.current.value = "";
+            }
         } catch (err) {
             console.error(err);
             alert("Upload failed.");
@@ -115,7 +122,7 @@ const InternshipList = () => {
             const res = await axios.delete(`/api/delIntern/${id}`);
             if (res.status === 200) {
                 alert("Record deleted successfully.");
-                setFilteredData((prev) => prev.filter((item) => item._id !== id));
+                setFilteredData((prev) => prev.filter((intern) => intern._id !== id));
                 fetchTotalRecords();
             }
         } catch (err) {
@@ -155,6 +162,7 @@ const InternshipList = () => {
                         type="file"
                         className="border border-black p-2 rounded-xl"
                         onChange={handleFileChange}
+                        ref={InputFileRef}
                     />
                     <button
                         className="bg-slate-700 text-white hover:bg-slate-400 p-2 rounded-xl"

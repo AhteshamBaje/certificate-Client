@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Navbar } from "../components/ui/Navbar";
@@ -64,6 +64,8 @@ const CourseList = () => {
         setSelectedFile(file || null);
     };
 
+    const InputFileRef = useRef(null);
+
     const handleUpload = async () => {
         if (!selectedFile) {
             alert("Please select a file first.");
@@ -83,6 +85,10 @@ const CourseList = () => {
             alert(response.data.message);
             fetchData();
             fetchTotalRecords();
+
+            if(InputFileRef.current){
+                InputFileRef.current.value="";
+            }
         } catch (error) {
             alert(error.response?.data?.message || "Upload failed");
         }
@@ -95,7 +101,8 @@ const CourseList = () => {
             const res = await axios.delete(`/api3/delCourse/${id}`);
             if (res.status === 200) {
                 alert("Course Student deleted successfully");
-                setFilteredData((prev) => prev.filter((item) => item._id !== id));
+                setFilteredData((prev) => prev.filter((intern) => intern._id !== id));
+                fetchTotalRecords();
             } else {
                 alert("Failed to delete. Record may not exist.");
             }
@@ -134,7 +141,7 @@ const CourseList = () => {
             {/* Upload and Total Records */}
             <div className="flex flex-col md:flex-row justify-between items-center px-4 mt-6 ">
                 <div className="flex flex-col md:flex-row gap-2 ">
-                    <input type="file" className="p-2 rounded-xl border border-black " onChange={handleFileChange} />
+                    <input type="file" className="p-2 rounded-xl border border-black " onChange={handleFileChange} ref={InputFileRef}/>
                     <button
                         className="p-2 rounded-2xl bg-slate-700 text-white hover:bg-slate-400"
                         onClick={handleUpload}

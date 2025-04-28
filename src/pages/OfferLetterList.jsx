@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Navbar } from '../components/ui/Navbar';
@@ -37,6 +37,8 @@ const OfferLetterList = () => {
         }
     };
 
+    const InputFileRef = useRef(null);
+
     const handleUpload = async () => {
         try {
             const data = await selectedFile.arrayBuffer();
@@ -51,6 +53,12 @@ const OfferLetterList = () => {
             );
 
             alert(response.data.message);
+            fetchData();
+            fetchTotalRecords2();
+
+            if(InputFileRef.current){
+                InputFileRef.current.value="";
+            }
         } catch (error) {
             console.error("Upload error:", error);
             alert(error.response?.data?.message || "Upload failed");
@@ -97,6 +105,7 @@ const OfferLetterList = () => {
             const res = await axios.delete(`/api2/deleteOfferLeter/${id}`);
             if (res.status === 200) {
                 alert("Employee deleted successfully");
+                fetchTotalRecords2();
                 setFilteredData((prevData) => prevData.filter((employe) => employe._id !== id));
             }
         } catch (error) {
@@ -125,7 +134,7 @@ const OfferLetterList = () => {
 
             <div className="flex flex-col md:flex-row justify-between items-center px-4 mt-6">
                 <div className="flex flex-col md:flex-row items-center gap-2">
-                    <input type="file" className="p-2 px-4 rounded-xl border border-black" onChange={handleFileChange} />
+                    <input type="file" className="p-2 px-4 rounded-xl border border-black" onChange={handleFileChange} ref={InputFileRef}/>
                     <button className="p-2 rounded-xl bg-slate-700 text-white hover:bg-slate-400" onClick={handleUpload}>
                         Upload File
                     </button>
