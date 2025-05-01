@@ -138,9 +138,15 @@ const OfferLetterList = () => {
                     <button className="p-2 rounded-xl bg-slate-700 text-white hover:bg-slate-400" onClick={handleUpload}>
                         Upload File
                     </button>
+
+                    <a href='/Templates/OfferSheet.xlsx' className='rounded-xl bg-cyan-600 text-white hover:bg-slate-400 p-2'>
+                        Download Excel Format.
+                    </a>
                 </div>
                 <p className="font-bold text-green-700 text-lg mt-2 md:mt-0">Total Records: {totalRecords}</p>
             </div>
+
+            <marquee behavior="alternate" direction="ltr" className="text-red-500">Date must be in ( mm/dd/yyyy ) Format</marquee>
 
             <div className="overflow-x-auto py-5 px-2">
                 <table className="w-full max-w-6xl mx-auto border-collapse">

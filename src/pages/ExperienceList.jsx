@@ -161,9 +161,15 @@ const ExperienceList = () => {
                     <button className='rounded-xl bg-slate-700 text-white hover:bg-slate-400 p-2' onClick={handleUpload}>
                         Upload File
                     </button>
+
+                    <a href='\Templates\Experience sheet.xlsx' className='rounded-xl bg-cyan-600 text-white hover:bg-slate-400 p-2'>
+                        Download Excel Format.
+                    </a>
                 </div>
                 <p className="font-bold text-green-700 text-lg mt-2 md:mt-0">Total Records: {totalRecords}</p>
             </div>
+
+            <marquee behavior="alternate" direction="ltr" className="text-red-500">Date must be in ( mm/dd/yyyy ) Format</marquee>
 
             {/* Table */}
             <div className="px-2 py-5 overflow-x-auto">
