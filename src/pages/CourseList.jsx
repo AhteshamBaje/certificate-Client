@@ -211,7 +211,7 @@ const CourseList = () => {
                                             onClick={() => navigate(`/CourseCertificate/${item._id}`)}
                                         >
                                             <svg
-                                                className="w-5 h-4 text-gray-800 dark:text-white"
+                                                className="w-5 h-4 text-gray-800"
                                                 aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width="25"
@@ -244,11 +244,11 @@ const CourseList = () => {
                                             </svg>
                                         </button>
                                         <button
-                                            className="bg-white border-2 text-white hover:bg-blue-400 px-2 py-1 rounded-md"
+                                            className="bg-white border-2 hover:bg-blue-400 px-2 py-1 rounded-md"
                                             onClick={() => navigate(`/course/update/${item._id}`)}
                                         >
                                             <svg
-                                                className="w-5 h-4 text-gray-800 dark:text-white"
+                                                className="w-5 h-4 text-gray-800"
                                                 aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width="24"

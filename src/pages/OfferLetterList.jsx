@@ -196,7 +196,7 @@ const OfferLetterList = () => {
                                     <td className="border p-2 flex space-x-2">
                                         <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/OfferLetter/${employe._id}`)}>
                                             <svg
-                                                className="w-5 h-4 text-gray-800 dark:text-white"
+                                                className="w-5 h-4 text-gray-800"
                                                 aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width="25"
@@ -227,7 +227,7 @@ const OfferLetterList = () => {
 
                                         <button className="bg-white border-2 text-white hover:bg-blue-400 px-2 py-1 rounded-md  " onClick={() => navigate(`/updateoffer/${employe._id}`)}>
                                             <svg
-                                                className="w-5 h-4 text-gray-800 dark:text-white"
+                                                className="w-5 h-4 text-gray-800"
                                                 aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width="24"

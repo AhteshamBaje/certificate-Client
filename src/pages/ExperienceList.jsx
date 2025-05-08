@@ -163,7 +163,7 @@ const ExperienceList = () => {
                     </button>
 
                     <a href='\Templates\Experience sheet.xlsx' className='rounded-xl bg-cyan-600 text-white hover:bg-slate-400 p-2'>
-                        Download Excel Format.
+                        Download Excel Format. 
                     </a>
                 </div>
                 <p className="font-bold text-green-700 text-lg mt-2 md:mt-0">Total Records: {totalRecords}</p>
@@ -226,7 +226,7 @@ const ExperienceList = () => {
                                             onClick={() => navigate(`/experienceCertificate/${intern._id}`)}
                                         >
                                              <svg
-                                                className="w-5 h-4 text-gray-800 dark:text-white"
+                                                className="w-5 h-4 text-gray-800"
                                                 aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width="25"
@@ -264,7 +264,7 @@ const ExperienceList = () => {
                                             onClick={() => navigate(`/experience/update/${intern._id}`)}
                                         >
                                            <svg
-                                                className="w-5 h-4 text-gray-800 dark:text-white"
+                                                className="w-5 h-4 text-gray-800"
                                                 aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width="24"
