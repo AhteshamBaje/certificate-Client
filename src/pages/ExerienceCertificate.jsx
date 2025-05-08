@@ -101,12 +101,12 @@ const ExpCertificate = () => {
         <img
           src="/images/sign.jpeg"
           alt="Signature"
-          className="h-16 w-28 ml-2 mt-[20px]"
+          className="h-16 w-28 ml-2 mt-[40px]"
         />
         <img
           src="/images/seal.jpeg"
           alt="Company Seal"
-          className="w-28 ml-[500px] -mt-[50px]"
+          className="w-28 ml-[500px] -mt-[70px]"
         />
 
         <p className="ml-4 -mt-11 font-bold text-sm">Huma Fatima</p>

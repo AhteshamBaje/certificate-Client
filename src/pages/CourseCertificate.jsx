@@ -97,7 +97,7 @@ const CourseCertificate = () => {
                 <Button onClick={() => navigate(-1)}>Back</Button>
             </div>
 
-            <div className="ml-[450px] my-20"> <strong>ID : {id}</strong> </div>
+            <div className="ml-[450px] my-14"> <strong>ID : {id}</strong> </div>
         </>
     );
 };

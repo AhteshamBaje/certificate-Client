@@ -94,7 +94,7 @@ const InternshipCertificate = () => {
                 <p className="ml-5  font-bold text-sm">Huma Fatima</p>
             </div>
 
-            <div className="mx-80 -mt-[330px]">
+            <div className="mx-80 -mt-[350px]">
                 <QRCode value={qr} className="h-24 w-24" />
             </div>
 
@@ -106,7 +106,7 @@ const InternshipCertificate = () => {
                 <Button onClick={() => navigate(-1)}>Back</Button>
             </div>
 
-            <div className="ml-[450px] my-20">
+            <div className="ml-[450px] my-14">
                 <strong>ID: {id}</strong>
             </div>
         </>

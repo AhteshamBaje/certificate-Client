@@ -92,7 +92,7 @@ const OfferLetter = () => {
 
       </div>
 
-      <div className="mx-80 -mt-[265px] ">
+      <div className="mx-80 -mt-[285px] ">
         <QRCode value={qr} className="h-20 w-20" />
       </div>
 
@@ -105,7 +105,7 @@ const OfferLetter = () => {
       <div className="flex justify-center mt-0 print:hidden">
         <Button onClick={() => navigate(-1)}>Back</Button>
       </div>
-      <div className="ml-[450px] my-10"> <strong>ID : {id}</strong> </div>
+      <div className="ml-[450px] my-6"> <strong>ID : {id}</strong> </div>
     </div>
   );
 };
