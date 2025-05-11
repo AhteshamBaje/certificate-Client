@@ -49,7 +49,7 @@ const OfferLetter = () => {
 
   return (
     <div>
-      <div ref={certificateRef} className="bg-[url(/images/offerLetter.png)] bg-contain bg-center h-[100vh] flex flex-col bg-no-repeat">
+      <div ref={certificateRef} className="bg-[url(/images/cmpnyLetter.png)] bg-contain bg-center h-[100vh] flex flex-col bg-no-repeat">
         <div className="p-10 pt-44 text-right">
           <strong>Date: {new Date().toLocaleDateString("en-IN")}</strong>
         </div>
@@ -102,7 +102,7 @@ const OfferLetter = () => {
       </div>
 
       {/* Hidden Back Button */}
-      <div className="flex justify-center mt-0 print:hidden">
+      <div className="flex justify-center mt-2 print:hidden">
         <Button onClick={() => navigate(-1)}>Back</Button>
       </div>
       <div className="ml-[450px] my-6"> <strong>ID : {id}</strong> </div>

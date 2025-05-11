@@ -56,7 +56,7 @@ const ExpCertificate = () => {
   return (
     <>
       <div
-        style={{ backgroundImage: "url('/images/offerLetter.png')" }}
+        style={{ backgroundImage: "url('/images/cmpnyLetter.png')" }}
         className="bg-contain bg-no-repeat w-[100vw] h-[100vh] bg-center flex flex-col px-12 pt-[120px]"
       >
         <div className="flex justify-between">
