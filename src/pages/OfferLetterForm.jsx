@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Navbar } from "../components/ui/Navbar";
+import { getItem } from "../utils/localStorage";
 
 function OfferLetterForm() {
   const [name, setName] = useState("");
@@ -16,6 +17,8 @@ function OfferLetterForm() {
 
   const navigate = useNavigate();
 
+  const user = getItem("certificate_user");
+
   const handleDownload = async (e) => {
     e.preventDefault();
     try {
@@ -25,6 +28,7 @@ function OfferLetterForm() {
         salary,
         jobRole,
         startDate,
+        user: user?._id
       });
 
       alert("Offer-Letter details saved successfully!");

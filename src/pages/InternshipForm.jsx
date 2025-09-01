@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { Navbar } from '../components/ui/Navbar.jsx';
+import { getItem } from '../utils/localStorage.js';
 
 export const Form = () => {
     const [studentName, setStudentName] = useState("");
@@ -15,13 +16,15 @@ export const Form = () => {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
+    const user = getItem("certificate_user");
+
 
     const navigate = useNavigate();
 
     const handleDownload = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('/api/internship', { studentName, usn, course, topic, startDate, endDate });
+            const res = await axios.post('/api/internship', { studentName, usn, course, topic, startDate, endDate, user: user?._id });
             alert('Certificate details saved successfully!');
 
             if (res.status === 200) {

@@ -17,7 +17,7 @@ const OfferLetter = () => {
       try {
         const res = await axios.get(`/api2/data/${id}`);
         if (!res.data.data) {
-          alert("No data found.");
+          navigate('/Invalidpage');
           return;
         }
         setData(res.data.data);
@@ -31,13 +31,13 @@ const OfferLetter = () => {
   const handleDownload = async () => {
 
     try {
-          window.print();
+      window.print();
 
-          await axios.put(`/api2/issuedDate/${id}`);
+      await axios.put(`/api2/issuedDate/${id}`);
     } catch (error) {
       console.error("Error saving issued date:", error);
       alert("Failed to update issued date in database");
-  }
+    }
   };
 
   if (!data) return <div>Loading...</div>;

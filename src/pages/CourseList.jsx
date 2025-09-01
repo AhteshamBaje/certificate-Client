@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Navbar } from "../components/ui/Navbar";
+import { getItem } from "../utils/localStorage";
 
 const CourseList = () => {
     const navigate = useNavigate();
@@ -14,6 +15,8 @@ const CourseList = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [totalRecords, setTotalRecords] = useState(0);
     const [issuedStatus, setIssuedStatus] = useState({});
+
+    const user = getItem("certificate_user");
 
     const fetchData = async () => {
         try {
@@ -78,7 +81,7 @@ const CourseList = () => {
             const worksheet = workbook.Sheets[workbook.SheetNames[0]];
             const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: false });
 
-            const response = await axios.post("/api3/course/upload", { jsonData }, {
+            const response = await axios.post("/api3/course/upload", { jsonData, user: user?._id }, {
                 headers: { "Content-Type": "application/json" },
             });
 
@@ -86,8 +89,8 @@ const CourseList = () => {
             fetchData();
             fetchTotalRecords();
 
-            if(InputFileRef.current){
-                InputFileRef.current.value="";
+            if (InputFileRef.current) {
+                InputFileRef.current.value = "";
             }
         } catch (error) {
             alert(error.response?.data?.message || "Upload failed");
@@ -141,7 +144,7 @@ const CourseList = () => {
             {/* Upload and Total Records */}
             <div className="flex flex-col md:flex-row justify-between items-center px-4 mt-6 ">
                 <div className="flex flex-col md:flex-row gap-2 ">
-                    <input type="file" className="p-2 rounded-xl border border-black " onChange={handleFileChange} ref={InputFileRef}/>
+                    <input type="file" className="p-2 rounded-xl border border-black " onChange={handleFileChange} ref={InputFileRef} />
                     <button
                         className="p-2 rounded-2xl bg-slate-700 text-white hover:bg-slate-400"
                         onClick={handleUpload}
@@ -174,6 +177,7 @@ const CourseList = () => {
                             <th className="border p-2">End Date</th>
                             <th className="border p-2">Certificate Number</th>
                             <th className="border p-2">Issued Date</th>
+                            <th className="border p-2">Issued By</th>
                             <th className="border p-2">Actions</th>
                         </tr>
                     </thead>
@@ -205,6 +209,7 @@ const CourseList = () => {
                                             <span className="text-red-500">Not issued</span>
                                         )}
                                     </td>
+                                    <td className="border p-2">{item?.user?.email || "-"}</td>
                                     <td className="border p-2 flex space-x-2">
                                         <button
                                             className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md"

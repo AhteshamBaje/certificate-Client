@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Navbar } from '../components/ui/Navbar';
+import { getItem } from '../utils/localStorage';
 
 const OfferLetterList = () => {
     const navigate = useNavigate();
@@ -14,6 +15,8 @@ const OfferLetterList = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [totalRecords, setTotalRecords] = useState(0);
     const [issuedStatus, setIssuedStatus] = useState({});
+
+    const user = getItem("certificate_user");
 
     const searchEmploye = async () => {
         try {
@@ -48,7 +51,7 @@ const OfferLetterList = () => {
 
             const response = await axios.post(
                 "/api2/offer/upload",
-                { jsonData },
+                { jsonData, user: user?._id },
                 { headers: { "Content-Type": "application/json" } }
             );
 
@@ -56,8 +59,8 @@ const OfferLetterList = () => {
             fetchData();
             fetchTotalRecords2();
 
-            if(InputFileRef.current){
-                InputFileRef.current.value="";
+            if (InputFileRef.current) {
+                InputFileRef.current.value = "";
             }
         } catch (error) {
             console.error("Upload error:", error);
@@ -134,7 +137,7 @@ const OfferLetterList = () => {
 
             <div className="flex flex-col md:flex-row justify-between items-center px-4 mt-6">
                 <div className="flex flex-col md:flex-row items-center gap-2">
-                    <input type="file" className="p-2 px-4 rounded-xl border border-black" onChange={handleFileChange} ref={InputFileRef}/>
+                    <input type="file" className="p-2 px-4 rounded-xl border border-black" onChange={handleFileChange} ref={InputFileRef} />
                     <button className="p-2 rounded-xl bg-slate-700 text-white hover:bg-slate-400" onClick={handleUpload}>
                         Upload File
                     </button>
@@ -161,6 +164,7 @@ const OfferLetterList = () => {
                             <th className="border p-2">Start Date</th>
                             <th className="border p-2">Reference Number</th>
                             <th className="border p-2">Issued Date</th>
+                            <th className="border p-2">Issued By</th>
                             <th className="border p-2">Actions</th>
                         </tr>
                     </thead>
@@ -192,6 +196,9 @@ const OfferLetterList = () => {
                                         ) : (
                                             <span className="text-red-500">Not issued</span>
                                         )}
+                                    </td>
+                                    <td className="p-2">
+                                        {employe?.user?.email || "-"}
                                     </td>
                                     <td className="border p-2 flex space-x-2">
                                         <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/OfferLetter/${employe._id}`)}>

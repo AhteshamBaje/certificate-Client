@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Navbar } from "../components/ui/Navbar";
 import { Input } from "postcss";
+import { getItem } from "../utils/localStorage";
 
 const InternshipList = () => {
     const navigate = useNavigate();
@@ -15,6 +16,8 @@ const InternshipList = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [totalRecords, setTotalRecords] = useState(0);
     const [issuedStatus, setIssuedStatus] = useState({});
+
+    const user = getItem("certificate_user");
 
     const searchStudent = async () => {
         try {
@@ -63,7 +66,10 @@ const InternshipList = () => {
 
             const res = await axios.post(
                 "/api/internship/upload",
-                { jsonData: newRecords },
+                {
+                    jsonData: newRecords,
+                    user: user?._id,
+                },
                 {
                     headers: { "Content-Type": "application/json" },
                 }
@@ -73,7 +79,7 @@ const InternshipList = () => {
             fetchData();
             fetchTotalRecords();
 
-            if(InputFileRef.current){
+            if (InputFileRef.current) {
                 InputFileRef.current.value = "";
             }
         } catch (err) {
@@ -198,6 +204,7 @@ const InternshipList = () => {
                             <th className="border p-2">End Date</th>
                             <th className="border p-2">Certificate No.</th>
                             <th className="border p-2">Issued Date</th>
+                            <th className="border p-2">Issued By</th>
                             <th className="border p-2">Actions</th>
                         </tr>
                     </thead>
@@ -248,6 +255,10 @@ const InternshipList = () => {
                                         ) : (
                                             <span className="text-red-500">Not issued</span>
                                         )}
+                                    </td>
+
+                                    <td className="border p-2">
+                                        {intern?.user?.email || "-"}
                                     </td>
 
                                     <td className="border p-2 flex space-x-2">

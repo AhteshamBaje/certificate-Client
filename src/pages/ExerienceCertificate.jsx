@@ -29,6 +29,7 @@ const ExpCertificate = () => {
         const response = await axios.get(`/api6/data/${id}`);
 
         if (!response.data.data) {
+          navigate('/Invalidpage');
           console.log("No data found");
           return;
         }
@@ -51,7 +52,7 @@ const ExpCertificate = () => {
     ReferenceNumber = "",
   } = formData || {};
 
-  const qr = `${import.meta.env.VITE_CLIENTURL}/ReferenceNumber/${id}`;
+  const qr = `${import.meta.env.VITE_CLIENTURL}/experienceCertificate/${id}`;
 
   return (
     <>

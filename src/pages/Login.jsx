@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { setItem } from "../utils/localStorage";
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -24,6 +25,7 @@ const Login = () => {
         try {
             const response = await axios.post("/api5/login", formData);
             localStorage.setItem("token", response.data.token); // Store JWT token
+            setItem("certificate_user", response.data.user); // Store JWT token in local storage
             setMessage(response.data.message);
             setFormData({ email: "", password: "" }); // Clear form after successful login
             setTimeout(() => {

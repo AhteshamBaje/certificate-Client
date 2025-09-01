@@ -5,6 +5,7 @@ import { Label } from '../components/ui/Label';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import axios from 'axios';
+import { getItem } from '../utils/localStorage.js';
 
 function CourseForm() {
     const [studentName, setStudentName] = useState("");
@@ -16,14 +17,16 @@ function CourseForm() {
 
     const navigate = useNavigate();
 
+    const user = getItem("certificate_user");
+
     const handleDownload = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('/api3/courseForm', { studentName, email, title, startDate, endDate });
+            const res = await axios.post('/api3/courseForm', { studentName, email, title, startDate, endDate, user: user?._id });
 
             if (res.status === 200) {
                 const resData = res.data;
-                console.log(resData.message);
+                console.log(resData.message);c
                 alert('Certificate details saved successfully!');
 
                 navigate(`/CourseCertificate/${resData.Certificate._id}`)

@@ -32,6 +32,7 @@ const CourseCertificate = () => {
                 const response = await axios.get(`/api3/data/${id}`);
 
                 if (!response.data.data) {
+                    navigate('/Invalidpage');
                     console.log("No data found");
                     return;
                 }

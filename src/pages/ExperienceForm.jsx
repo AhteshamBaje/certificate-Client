@@ -5,22 +5,25 @@ import { Label } from '../components/ui/Label';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import axios from 'axios';
+import { getItem } from '../utils/localStorage';
 
 function ExperienceForm() {
     const [employeName, setEmployeName] = useState("");
     const [email, setEmail] = useState("");
     const [jobRole, setJobRole] = useState("");
-    const [responsibilities , setResponsibilities] = useState("");
+    const [responsibilities, setResponsibilities] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
 
     const navigate = useNavigate();
 
+    const user = getItem("certificate_user");
+
     const handleDownload = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('/api6/experienceForm', { employeName, email, jobRole, responsibilities, startDate, endDate });
+            const res = await axios.post('/api6/experienceForm', { employeName, email, jobRole, responsibilities, startDate, endDate, user: user?._id });
 
             if (res.status === 200) {
                 const resData = res.data;
