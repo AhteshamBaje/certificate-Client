@@ -5,6 +5,7 @@ import { Button } from "../components/ui/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import QRCode from "react-qr-code";
+import { checkIfNum } from "../utils/Datatypes";
 
 const OfferLetter = () => {
   const { id } = useParams();
@@ -68,7 +69,7 @@ const OfferLetter = () => {
           <br /><br />
           <strong>Position:</strong> {jobRole}
           <br />
-          <strong>Salary:</strong> ₹{salary} per month
+          <strong>Salary:</strong> {checkIfNum(salary) ? `₹${salary} per month` : salary}
           <br />
           <strong>Joining Date:</strong> {new Date(startDate).toLocaleDateString("en-IN")}
           <br /><br />
