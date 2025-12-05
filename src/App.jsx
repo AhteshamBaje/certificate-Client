@@ -37,15 +37,15 @@ function App() {
     },
     {
       path: '/',
-      element: <Login/>
+      element: <Login />
     },
     {
       path: '/login',
       element: <Login />
     },
     {
-      path:'/Invalidpage',
-      element:<InvalidPage/>
+      path: '/Invalidpage',
+      element: <InvalidPage />
     },
 
     //Internship paths...
@@ -62,7 +62,7 @@ function App() {
       element: (<ProtectedRoute><InternshipList /></ProtectedRoute>)
     },
     {
-      path:'/Internship/Update/:id',
+      path: '/Internship/Update/:id',
       element: (<ProtectedRoute><InternshipUpdateForm /></ProtectedRoute>)
     },
 
@@ -80,8 +80,8 @@ function App() {
       element: (<ProtectedRoute><OfferLetterList /></ProtectedRoute>)
     },
     {
-      path:'/updateoffer/:id',
-      element:(<ProtectedRoute><OfferUpdateForm/></ProtectedRoute>)
+      path: '/updateoffer/:id',
+      element: (<ProtectedRoute><OfferUpdateForm /></ProtectedRoute>)
     },
 
     //course paths...
@@ -98,26 +98,26 @@ function App() {
       element: (<ProtectedRoute><CourseList /></ProtectedRoute>)
     },
     {
-      path:'/course/update/:id',
-      element:(<ProtectedRoute><CourseUpdateForm /></ProtectedRoute>)
+      path: '/course/update/:id',
+      element: (<ProtectedRoute><CourseUpdateForm /></ProtectedRoute>)
     },
 
     // Experience paths....
     {
-      path:'/experienceForm',
-      element:(<ProtectedRoute><ExperienceForm/></ProtectedRoute>)
+      path: '/experienceForm',
+      element: (<ProtectedRoute><ExperienceForm /></ProtectedRoute>)
     },
     {
-      path:'/experienceList',
-      element:(<ProtectedRoute><ExperienceList/></ProtectedRoute>)
+      path: '/experienceList',
+      element: (<ProtectedRoute><ExperienceList /></ProtectedRoute>)
     },
     {
-      path:'/experienceCertificate/:id',
-      element:<ExpCertificate/>
+      path: '/experienceCertificate/:id',
+      element: <ExpCertificate />
     },
     {
-      path:'/experience/update/:id',
-      element:(<ProtectedRoute><ExperienceUpdateForm/></ProtectedRoute>)
+      path: '/experience/update/:id',
+      element: (<ProtectedRoute><ExperienceUpdateForm /></ProtectedRoute>)
     }
   ]);
 

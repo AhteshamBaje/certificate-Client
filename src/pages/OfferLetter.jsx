@@ -12,6 +12,8 @@ const OfferLetter = () => {
   const navigate = useNavigate();
   const certificateRef = useRef(null);
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [location, setLocation] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,73 +43,105 @@ const OfferLetter = () => {
     }
   };
 
-  if (!data) return <div>Loading...</div>;
-
-  const { name, salary, jobRole, startDate, RefereneNo } = data;
+  const { name, salary, jobRole, startDate, RefereneNo } = data || {};
 
   const qr = `${import.meta.env.VITE_CLIENTURL}/OfferLetter/${id}`;
 
+  const handleSelectLocation = (location) => {
+    setLocation(location);
+    setLoading(false);
+  }
 
   return (
-    <div>
-      <div ref={certificateRef} className="bg-[url(/images/cmpnyLetter.png)] bg-contain bg-center h-[100vh] flex flex-col bg-no-repeat">
-        <div className="p-10 pt-44 text-right">
-          <strong>Date: {new Date().toLocaleDateString("en-IN")}</strong>
-        </div>
-        <div className="-mt-16 ml-4 text-left">
-          <strong>REF: {RefereneNo}</strong>
-        </div>
-        <p className="p-14 text-center font-bold">OFFER LETTER</p>
-        <div className="-mt-22 ml-4 text-left">To, {name}</div>
-        <div className="ml-4 text-left">Subject: Offer for {jobRole}</div>
-        <p className="p-4 text-justify">
-          Dear <strong>{name}</strong>, We are pleased to extend to you the
-          offer to join <strong>Five Seven I.T Solutions</strong> as a{" "}
-          <strong>{jobRole}</strong>. Your skills and expertise have impressed
-          us, and we are confident that you will make significant contributions
-          to our team. Please find the details of the full-time position below:
-          <br /><br />
-          <strong>Position:</strong> {jobRole}
-          <br />
-          <strong>Salary:</strong> {checkIfNum(salary) ? `₹${salary} per month` : salary}
-          <br />
-          <strong>Joining Date:</strong> {new Date(startDate).toLocaleDateString("en-IN")}
-          <br /><br />
-          Your role as a {jobRole} will require you to take on various
-          responsibilities and work closely with the team to achieve the
-          company's goals. We believe this position will offer you many
-          opportunities for growth and development. Please sign and return a
-          copy of this letter as a confirmation of your acceptance. If you have
-          any questions or concerns, feel free to contact us. We look forward to
-          welcoming you to the team at Five Seven I.T Solutions. Best Regards,
-        </p>
-        <div className="w-28 ml-10 mt-5">
-          <img src="/images/sign.jpeg" alt="sign" />
-        </div>
-        <div className="w-24 ml-[550px] -mt-[60px]">
-          <img src="/images/seal.jpeg" alt="seal" />
-        </div>
-        <p className="ml-12 -mt-7 font-bold text-sm">Huma Fatima</p>
-        <p className="ml-12 font-bold text-sm">Chief Executive Officer</p>
-        <p className="ml-12 font-bold text-sm">Five Seven I.T Solutions</p>
+    <>
+      {
+        loading ?
+          <>
+            <div className="flex flex-col items-center justify-center m-4">
+              <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
+              <p className="mt-6 text-xl font-semibold text-gray-700">Loading certificate data, Please select location...</p>
+            </div>
+            <div className="flex justify-center gap-4 mt-4">
+              <Button onClick={() => handleSelectLocation("Kalaburagi")} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
+                Kalaburagi
+              </Button>
+              <Button onClick={() => handleSelectLocation("Bangalore")} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
+                Bangalore
+              </Button>
+            </div>
 
-      </div>
+          </>
+          :
+          <div>
+            <div
+              ref={certificateRef}
+              style={{
+                backgroundImage: location === "Kalaburagi" ?
+                  "url('/images/cmpnyLetter.png')"
+                  :
+                  "url('/images/CompanyBengaluru.jpeg')"
+              }}
+              className="bg-contain bg-center h-[100vh] flex flex-col bg-no-repeat"
+            >
+              <div className="p-10 pt-44 text-right">
+                <strong>Date: {new Date().toLocaleDateString("en-IN")}</strong>
+              </div>
+              <div className="-mt-16 ml-4 text-left">
+                <strong>REF: {RefereneNo}</strong>
+              </div>
+              <p className="p-14 text-center font-bold">OFFER LETTER</p>
+              <div className="-mt-22 ml-4 text-left">To, {name}</div>
+              <div className="ml-4 text-left">Subject: Offer for {jobRole}</div>
+              <p className="p-4 text-justify">
+                Dear <strong>{name}</strong>, We are pleased to extend to you the
+                offer to join <strong>Five Seven I.T Solutions</strong> as a{" "}
+                <strong>{jobRole}</strong>. Your skills and expertise have impressed
+                us, and we are confident that you will make significant contributions
+                to our team. Please find the details of the full-time position below:
+                <br /><br />
+                <strong>Position:</strong> {jobRole}
+                <br />
+                <strong>Salary:</strong> {checkIfNum(salary) ? `₹${salary} per month` : salary}
+                <br />
+                <strong>Joining Date:</strong> {new Date(startDate).toLocaleDateString("en-IN")}
+                <br /><br />
+                Your role as a {jobRole} will require you to take on various
+                responsibilities and work closely with the team to achieve the
+                company's goals. We believe this position will offer you many
+                opportunities for growth and development. Please sign and return a
+                copy of this letter as a confirmation of your acceptance. If you have
+                any questions or concerns, feel free to contact us. We look forward to
+                welcoming you to the team at Five Seven I.T Solutions. Best Regards,
+              </p>
+              <div className="w-28 ml-10 mt-5">
+                <img src="/images/sign.jpeg" alt="sign" />
+              </div>
+              <div className="w-24 ml-[550px] -mt-[60px]">
+                <img src="/images/seal.jpeg" alt="seal" />
+              </div>
+              <p className="ml-12 -mt-7 font-bold text-sm">Huma Fatima</p>
+              <p className="ml-12 font-bold text-sm">Chief Executive Officer</p>
+              <p className="ml-12 font-bold text-sm">Five Seven I.T Solutions</p>
 
-      <div className="mx-80 -mt-[285px] ">
-        <QRCode value={qr} className="h-20 w-20" />
-      </div>
+            </div>
+
+            <div className="mx-80 -mt-[285px] ">
+              <QRCode value={qr} className="h-20 w-20" />
+            </div>
 
 
-      <div className="flex justify-center print:hidden">
-        <Button onClick={handleDownload}>Download Certificate</Button>
-      </div>
+            <div className="flex justify-center print:hidden">
+              <Button onClick={handleDownload}>Download Certificate</Button>
+            </div>
 
-      {/* Hidden Back Button */}
-      <div className="flex justify-center mt-2 print:hidden">
-        <Button onClick={() => navigate(-1)}>Back</Button>
-      </div>
-      <div className="ml-[450px] my-6"> <strong>ID : {id}</strong> </div>
-    </div>
+            {/* Hidden Back Button */}
+            <div className="flex justify-center mt-2 print:hidden">
+              <Button onClick={() => navigate(-1)}>Back</Button>
+            </div>
+            <div className="ml-[450px] my-6"> <strong>ID : {id}</strong> </div>
+          </div>
+      }
+    </>
   );
 };
 
