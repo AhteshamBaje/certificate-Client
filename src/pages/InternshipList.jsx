@@ -265,7 +265,7 @@ const InternshipList = () => {
                                         <button
                                             className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md"
                                             onClick={() =>
-                                                navigate(`/Internshipcertificate/${intern._id}`)
+                                                navigate(`/Internshipcertificate/${intern._id}?flag=true`)
                                             }
                                         >
                                             <svg

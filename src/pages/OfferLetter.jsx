@@ -2,13 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { Button } from "../components/ui/Button";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import QRCode from "react-qr-code";
 import { checkIfNum } from "../utils/Datatypes";
 
 const OfferLetter = () => {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const flag = searchParams.get("flag");
   const navigate = useNavigate();
   const certificateRef = useRef(null);
   const [data, setData] = useState(null);
@@ -50,6 +52,29 @@ const OfferLetter = () => {
   const handleSelectLocation = (location) => {
     setLocation(location);
     setLoading(false);
+  }
+
+  if (!flag) {
+    return <>
+      {data && (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+          <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+            <svg className="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Certificate Verified!</h2>
+            <p className="text-gray-600">The details for this certificate have been successfully verified.</p>
+            <div className="mt-6 text-left border-t pt-4">
+              <h3 className="text-xl font-semibold text-gray-700 mb-2">Certificate Details:</h3>
+              <p className="text-gray-700"><span className="font-medium">Name:</span> {name}</p>
+              <p className="text-gray-700"><span className="font-medium">Position:</span> {jobRole}</p>
+              <p className="text-gray-700"><span className="font-medium">Joining Date:</span> {new Date(startDate).toLocaleDateString("en-IN")}</p>
+              <p className="text-gray-700"><span className="font-medium">Reference No:</span> {RefereneNo}</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   }
 
   return (

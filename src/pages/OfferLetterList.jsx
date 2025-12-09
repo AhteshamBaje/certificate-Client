@@ -201,7 +201,7 @@ const OfferLetterList = () => {
                                         {employe?.user?.email || "-"}
                                     </td>
                                     <td className="border p-2 flex space-x-2">
-                                        <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/OfferLetter/${employe._id}`)}>
+                                        <button className="bg-blue-200 text-white hover:bg-green-600 px-2 py-1 rounded-md" onClick={() => navigate(`/OfferLetter/${employe._id}?flag=true`)}>
                                             <svg
                                                 className="w-5 h-4 text-gray-800"
                                                 aria-hidden="true"
