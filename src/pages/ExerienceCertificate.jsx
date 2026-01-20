@@ -161,13 +161,17 @@ const ExpCertificate = () => {
                 alt="Signature"
                 className="h-16 w-28 ml-2 mt-[40px]"
               />
-              <img
-                src="/images/seal.jpeg"
-                alt="Company Seal"
-                className="w-28 ml-[500px] -mt-[70px]"
-              />
+              {
+                location === "Kalaburagi" && (
+                  <img
+                    src="/images/seal.jpeg"
+                    alt="Company Seal"
+                    className="w-28 ml-[500px] -mt-[70px]"
+                  />
+                )
+              }
 
-              <p className="ml-4 -mt-11 font-bold text-sm">Huma Fatima</p>
+              <p className={location === "Kalaburagi" ? "ml-4 -mt-11 font-bold text-sm" : "ml-4 -mt-22 font-bold text-sm"}>Huma Fatima</p>
               <p className="ml-4 font-bold text-sm">Chief Executive Officer</p>
               <p className="ml-4 font-bold text-sm">Five Seven I.T Solutions</p>
             </div>
