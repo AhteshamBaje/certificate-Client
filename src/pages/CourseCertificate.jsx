@@ -136,9 +136,12 @@ const CourseCertificate = () => {
                             </div>
 
                             <img src="/images/sign.jpeg" alt="Signature" className="h-16 w-28 ml-2 mt-[20px]" />
-                            <img src="/images/seal.jpeg" alt="Company Seal" className="w-28 ml-[500px] -mt-[65px]" />
-
-                            <p className="ml-4 -mt-10 font-bold text-sm">Huma Fatima</p>
+                            {
+                                location === "Kalaburagi" && (
+                                    <img src="/images/seal.jpeg" alt="Company Seal" className="w-28 ml-[500px] -mt-[65px]" />
+                                )
+                            }
+                            <p className={location === "Kalaburagi" ? "ml-4 -mt-11 font-bold text-sm" : "ml-4 -mt-22 font-bold text-sm"}>Huma Fatima</p>
                             <p className="ml-4 font-bold text-sm">Chief Executive Officer</p>
                             <p className="ml-4 font-bold text-sm">Five Seven I.T Solutions</p>
                         </div>

@@ -144,10 +144,13 @@ const InternshipCertificate = () => {
                                 We appreciate their efforts and contributions during the internship and wish them success in their future endeavors.
                             </p>
 
-                            <img src="/images/sign.jpeg" alt="Signature" className="h-16 w-28 ml-2 mt-[60px]" />
-                            <img src="/images/seal.jpeg" alt="Company Seal" className="w-28 ml-[500px] -mt-[58px]" />
-
-                            <p className="ml-5 -mt-10 font-bold text-sm">Chief Executive Officer</p>
+                            <img src="/images/sign.jpeg" alt="Signature" className="h-16 w-28 ml-5 mt-[60px]" />
+                            {
+                                location === "Kalaburagi" && (
+                                    <img src="/images/seal.jpeg" alt="Company Seal" className="w-28 ml-[500px] -mt-[58px]" />
+                                )
+                            }
+                            <p className={location === "Kalaburagi" ? "ml-5 -mt-11 font-bold text-sm" : "ml-5 -mt-22 font-bold text-sm"}>Chief Executive Officer</p>
                             <p className="ml-5 font-bold text-sm">Five Seven I.T Solutions</p>
                             <p className="ml-5  font-bold text-sm">Huma Fatima</p>
                         </div>

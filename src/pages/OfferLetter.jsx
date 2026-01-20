@@ -141,10 +141,14 @@ const OfferLetter = () => {
               <div className="w-28 ml-10 mt-5">
                 <img src="/images/sign.jpeg" alt="sign" />
               </div>
-              <div className="w-24 ml-[550px] -mt-[60px]">
-                <img src="/images/seal.jpeg" alt="seal" />
-              </div>
-              <p className="ml-12 -mt-7 font-bold text-sm">Huma Fatima</p>
+              {
+                location === "Kalaburagi" && (
+                  <div className="w-24 ml-[550px] -mt-[60px]">
+                    <img src="/images/seal.jpeg" alt="seal" />
+                  </div>
+                )
+              }
+              <p className={location === "Kalaburagi" ? "ml-12 -mt-10 font-bold text-sm" : "ml-12 -mt-22 font-bold text-sm"}>Huma Fatima</p>
               <p className="ml-12 font-bold text-sm">Chief Executive Officer</p>
               <p className="ml-12 font-bold text-sm">Five Seven I.T Solutions</p>
 
