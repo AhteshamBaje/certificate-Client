@@ -126,7 +126,7 @@ const ExpCertificate = () => {
                 </p>
               </div>
 
-              <p className="p-14 text-center font-bold font-serif text-2xl">EXPERIENCE LETTER</p>
+              <p className="p-10 text-center font-bold font-serif text-2xl">EXPERIENCE LETTER</p>
 
               <div className=" text-lg m-2 text-justify">
                 <p className=" pt-2">
@@ -171,7 +171,7 @@ const ExpCertificate = () => {
                 )
               }
 
-              <p className={location === "Kalaburagi" ? "ml-4 -mt-11 font-bold text-sm" : "ml-4 -mt-22 font-bold text-sm"}>Huma Fatima</p>
+              <p className={location === "Kalaburagi" ? "ml-4 -mt-10 font-bold text-sm" : "ml-4 -mt-22 font-bold text-sm"}>Huma Fatima</p>
               <p className="ml-4 font-bold text-sm">Chief Executive Officer</p>
               <p className="ml-4 font-bold text-sm">Five Seven I.T Solutions</p>
             </div>
